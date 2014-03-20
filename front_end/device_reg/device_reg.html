@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="utf-8">
+        <title>Social Network of Things</title>
+        <link href = "css/bootstrap.min.css" rel = "stylesheet">
+        <link href = "stylesheet_device_reg.css" rel = "stylesheet">
+    </head>
+    
+    <body>
+        <div class="container">
+            <div class="row">
+                <form class="form-horizontal" action='' method="POST">
+                    <div id="legend">
+                        <legend style="text-align:center;">Device Registration</legend>
+                    </div>
+                  <fieldset>
+                    <!-- Device Name -->
+                    <div class="control-group">
+                      <label class="control-label" for="device_name">Name of Device</label>
+                      <div class="controls">
+                        <input type="text" id="device_name" name="device_name" maxlength="25">
+                        <p class="help-block">Please enter a name for your device</p>
+                      </div>
+                    </div>
+                    <!-- Device Type -->
+                    <div class="control-group">
+                      <label class="control-label" for="device_type">Type of Device</label>
+                      <div class="controls">
+                        <input type="text" id="device_type" name="device_type">
+                        <p class="help-block">Please enter what kind of device this is</p>
+                      </div>
+                    </div>
+                    <!-- Current setting -->
+                    <div class="dropdown">
+                        <label class="control-label" for="current_setting">Current Setting</label>
+                        <div class="controls">
+                            <select id="current_setting" name="current_setting" class="form-control" style="width:20%;">
+                                <option value="on">ON</option>
+                                <option value="off">OFF</option>
+                                <option value="other">OTHER</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!-- Settings -->
+                    <div class="control-group" id="checkboxes">
+                        <label class="control-label">Available Settings</label></br>
+                            <label class="checkbox-inline" for="available_settings"> ON
+                                <input type="checkbox" id="inlineCheckbox1" value="on_option"> 
+                            </label>
+                            <label class="checkbox-inline"> OFF
+                                <input type="checkbox" id="inlineCheckbox2" value="off_option">
+                            </label>
+                            <label class="checkbox-inline"> OTHER
+                                <input type="checkbox" id="inlineCheckbox3" value="other_option">
+                            </label>
+                        </label>
+                    </div>
+                    <!-- Sign up Button -->
+                    <div class="control-group">
+                        <div class="controls">
+                            <button class="btn btn-success" type="submit" value="Submit">Register</button>
+                        </div>
+                    </div>
+                  </fieldset>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>
