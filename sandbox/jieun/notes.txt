@@ -1,0 +1,7 @@
+//notes 
+//when having a problem with ports 
+killall -9 node 
+
+http://www.nodewiz.biz/nodejs-rest-api-with-mysql-and-express/
+
+http://coenraets.org/blog/2012/10/real-time-web-analytics-with-node-js-and-socket-io/
