@@ -30,7 +30,7 @@ passport.deserializeUser (function (user, done) {
 	done (null, user); 
 }); 
 
-passport.use ('local', new LocalStrategy (function (username, password, done){
+passport.use ('login-local', new LocalStrategy (function (username, password, done){
 	console.log ("passport.use is called");
 	//asynchronous verification 
 	process.nextTick (function () { 
@@ -84,7 +84,15 @@ passport.use ('local', new LocalStrategy (function (username, password, done){
 }) //process next
 }));
 
+app.post('/test', function (req, res) {
 
+	console.log ("hello"); 
+	//console.log (res.body.stats);
+	res.send("you are working here");
+	//res.redirect("http://www.google.com"); 
+//	res.end();
+
+});
 /*
 app.post ('/login', function(req, res) {
     console.log('req username :' + req.body.username);

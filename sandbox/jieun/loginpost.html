@@ -17,17 +17,34 @@
  		$.ajax({
 			dataType: "json",
 			type: "POST", 
-			url: "//localhost:3001/login", 
+			url: "//localhost:3001/test", 
+			//contentType: 'charset=utf-8' ,
  			contentType: 'application/json; charset=utf-8',
 			data: JSON.stringify(user), 
+			/*
 			success: function (msg) {
 				console.log(JSON.stringify(msg));
 				var obj = JSON.parse(JSON.stringify(msg));
 				//redirect the page 
-				if (obj.success) { window.location.replace("http://localhost:3001/front_end/profile/profile.html");} 
+				if (obj.success) { window.location.replace("//http://localhost:3001/front_end/profile/profile.html");} 
 				else if (!obj.success) {window.location.replace("http://localhost:3001/front_end/loginpost.html");}
+        	
         	}
-
+*/ 
+		success: function () {
+			alert ("I am successful"); 
+		},
+		error: function(e) {
+			
+			var obj=	JSON.parse(JSON.stringify(e));
+			if (obj.status == 200) { 
+					alert ("I am 200 " + obj.status); 
+			}
+			else { 
+			alert ("I have an error" + JSON.stringify(e));
+                        console.log(e);
+			}
+		}
 			}); //ajax
  		console.log("I sent the request");
    		}); //login
