@@ -11,25 +11,51 @@
 $(document).ready(function(){
 	alert("test");
         $.ajax({
+        	type:'post',
         	url: 'http://localhost:3001/login',
         	cache: false,
         	dataType: "json",
         	complete: function(data) {
-        		username = data.username;
-        		alert(username);
+        		alert(data);
         	}
-
         });
 }); 
 
 	</script>
+
+
+<script type="text/javascript">
+
+$( "form" ).submit(function( event ) {
+
+    function send() {
+        var user = {
+            username: $("#username").val(),
+            password:$("#password").val(),
+        }
+
+        $('#target').html('sending..');
+
+        $.ajax({
+            url: '//localhost:3001/login',
+            type: 'post',
+            dataType: 'json',
+            success: function (data) {
+                $('#target').html(data.msg);
+            },
+            data: user
+        });
+    }
+</script>
+
+
 		<div class="container">
     		<div class="row">
 				<fieldset></br>
 			    	<div id="legend">
 			      		<legend class="">Login</legend>
 			    	</div>
-			    	
+			    <form id ="login">
 			      	<!-- Username -->
 			    	<div class="input-group">
 			      		<div class="input">
@@ -49,9 +75,10 @@ $(document).ready(function(){
 			    	<!-- Button -->
 			    	<div class="control-group">
 			      		<div class="controls">
-			        		<button class="btn btn-success" id="login_button">Login</button>
+			        		<button class="btn btn-success" id="">Login</button>
 			      		</div>
 			    	</div>
+			    </form> 
 				</fieldset>
 			</div>
 		</div>

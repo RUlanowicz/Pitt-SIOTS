@@ -2,34 +2,48 @@
 	<head>
 		<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<script type="text/javascript"  language="javascript">
 
+   	$(document).ready(function() {
+      $("#login_button").click(function(event){
+      	   var user = {
+            username: $("#username").val(),
+            password:$("#password").val(),
+        }
+
+        console.log ("username: " + username + "password: " + password); 
+        console.log (user); 
+
+ 		$.ajax({
+			dataType: "json",
+			type: "POST", 
+			url: "//localhost:3001/login", 
+ 			contentType: 'application/json; charset=utf-8',
+			data: JSON.stringify(user), 
+			success: function (msg) {
+				console.log(JSON.stringify(msg));
+				var obj = JSON.parse(JSON.stringify(msg));
+				//redirect the page 
+				if (obj.success) { window.location.replace("http://localhost:3001/front_end/profile/profile.html");} 
+				else if (!obj.success) {window.location.replace("http://localhost:3001/front_end/loginpost.html");}
+        	}
+
+			}); //ajax
+ 		console.log("I sent the request");
+   		}); //login
+	}) //docuemnt 
+	</script>
 	</head>
 
 	<body>
 
-	<script type="text/javascript">
-$(document).ready(function(){
-	alert("test");
-        $.ajax({
-        	url: 'http://localhost:3001/login',
-        	cache: false,
-        	dataType: "json",
-        	complete: function(data) {
-        		username = data.username;
-        		alert(username);
-        	}
 
-        });
-}); 
-
-	</script>
 		<div class="container">
     		<div class="row">
 				<fieldset></br>
 			    	<div id="legend">
 			      		<legend class="">Login</legend>
 			    	</div>
-			    	
 			      	<!-- Username -->
 			    	<div class="input-group">
 			      		<div class="input">
@@ -55,5 +69,6 @@ $(document).ready(function(){
 				</fieldset>
 			</div>
 		</div>
+
 	</body>
 </html>
