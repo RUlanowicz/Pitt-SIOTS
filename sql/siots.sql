@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 22, 2014 at 01:57 PM
+-- Generation Time: Mar 30, 2014 at 12:09 PM
 -- Server version: 5.5.31
 -- PHP Version: 5.3.10-1ubuntu3.6
 
@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS `communication` (
   `type` varchar(500) NOT NULL,
   `communicationId` int(50) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`communicationId`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `communication`
@@ -86,7 +86,7 @@ INSERT INTO `device_capability_template` (`capability_category`, `capability_nam
 --
 
 CREATE TABLE IF NOT EXISTS `device_instance` (
-  `belongTo` varchar(50) NOT NULL,
+  `belongTo` varchar(50) CHARACTER SET utf8 NOT NULL,
   `deviceType` varchar(50) NOT NULL,
   `indoorLocation` varchar(50) NOT NULL,
   `deviceName` varchar(50) NOT NULL,
@@ -152,6 +152,47 @@ CREATE TABLE IF NOT EXISTS `indoor_location` (
   `gps_lon` varchar(50) NOT NULL,
   PRIMARY KEY (`indoorLocationId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `relationship`
+--
+
+CREATE TABLE IF NOT EXISTS `relationship` (
+  `id` int(11) NOT NULL,
+  `relationship_temp_id` int(11) NOT NULL,
+  `subject_type` int(11) NOT NULL,
+  `object_type` int(11) NOT NULL,
+  `object_id` int(11) NOT NULL,
+  `subject_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `relationship_template`
+--
+
+CREATE TABLE IF NOT EXISTS `relationship_template` (
+  `relationship_temp_id` int(11) NOT NULL AUTO_INCREMENT,
+  `relationship_temp_name` varchar(100) NOT NULL,
+  `subject_type` varchar(100) NOT NULL,
+  `object_type` varchar(100) NOT NULL,
+  PRIMARY KEY (`relationship_temp_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+
+--
+-- Dumping data for table `relationship_template`
+--
+
+INSERT INTO `relationship_template` (`relationship_temp_id`, `relationship_temp_name`, `subject_type`, `object_type`) VALUES
+(1, 'friendship', 'human', 'human'),
+(2, 'ownership', 'human', 'device'),
+(3, 'kinship', 'device', 'device'),
+(4, 'colocationship', 'human, device', 'human, device'),
+(5, 'socialdeviceship', 'human, device', 'human, device');
 
 -- --------------------------------------------------------
 
