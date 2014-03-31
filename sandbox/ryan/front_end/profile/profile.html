@@ -1,0 +1,228 @@
+<html lang="en">
+
+	<head>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+		<script type="text/javascript"  language="javascript">
+
+   	$(document).ready(function() {
+      $("#test").click(function(event){
+      	   // var user = {
+          //   username: $("#username").val(),
+          //   password:$("#password").val(),
+        	//}
+
+        //console.log ("username: " + username + "password: " + password); 
+        //console.log (user); 
+
+        var testobject = {
+        	testsession: "test session"
+        };
+
+ 		$.ajax({
+			dataType: "json",
+			type: "POST", 
+			url: "//localhost:3001/device_registration", 
+ 			contentType: 'application/json; charset=utf-8',
+			data: JSON.stringify(testobject), 
+			success: function (msg) {
+				console.log(JSON.stringify(msg));
+				// var obj = JSON.parse(JSON.stringify(msg));
+				// //redirect the page 
+				// if (obj.success) { window.location.replace("http://localhost:3001/front_end/profile/profile.html");} 
+				// else if (!obj.success) {window.location.replace("http://localhost:3001/front_end/loginpost.html");}
+        	}
+
+			}); //ajax
+ 		console.log("I sent the request");
+   		}); //login
+	}) //docuemnt 
+	</script>
+	</head>
+
+	<body>
+		<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script type="text/javascript"></script>
+	
+		<!-- User Name -->
+		<div class="col-md-12" style="margin-top:2%">
+			<p style="margin-left:2%;font-size:60">Josef Grzenda</p>
+		</div>
+		
+		<!-- Profile Picture -->
+		<div class="col-md-5">
+			<div class="container" style="margin-top: 5%;">
+				<div class="col-md-5">
+					<img src="http://blogs.utexas.edu/bonnecazegroup/files/2013/02/blank-profile-hi.png"
+						alt="" class="img-rounded img-responsive" />
+				</div>
+			</div>
+		</div>
+		
+		<!-- Tabs -->
+		<div class="col-md-7">
+			<div class="container">
+				<div class="col-md-7">
+					
+					<!-- Tab Names -->
+					<ul class="nav nav-tabs" style="margin-top: 10%;">
+						<li class="active"><a href="#friends" data-toggle="tab">Friends</a></li>
+						<li><a href="#thriends" data-toggle="tab">Thriends</a></li>
+						<li><a href="#devices" data-toggle="tab">Devices</a></li>
+					</ul></br>
+			
+					<!-- Tab Contents -->
+					<div id="myTabContent" class="tab-content">
+			
+						<!-- Friends Tab -->
+						<div class="tab-pane active in; col-md-8;" id="friends">
+						<form id="tab">
+							<div>
+								<button class="btn btn-success" id="test">Add New Friend</button>
+							</div></br>
+							
+							<!-- Friend Name | Friend Location -->
+							<div style="display:inline-block; vertical-align:bottom;">
+							<a href="#">
+								<p style="float: left"><img src="http://blogs.utexas.edu/bonnecazegroup/files/2013/02/blank-profile-hi.png"
+									alt="" class="img-rounded img-responsive" height="10%" width="10%" style="margin-top:2%;"/>
+								Richard Knight | Pittsburgh, PA</p>
+							</a>
+							</div></br>
+							<div style="display:inline-block; vertical-align:bottom;">
+							<a href="#">
+								<p style="float: left"><img src="http://blogs.utexas.edu/bonnecazegroup/files/2013/02/blank-profile-hi.png"
+									alt="" class="img-rounded img-responsive" height="10%" width="10%" style="margin-top:2%;"/>
+								Ryan Ulanowicz | Los Angeles, CA</p>
+							</a>
+							</div></br>
+							<div style="display:inline-block; vertical-align:bottom;">
+							<a href="#">
+								<p style="float: left"><img src="http://blogs.utexas.edu/bonnecazegroup/files/2013/02/blank-profile-hi.png"
+									alt="" class="img-rounded img-responsive" height="10%" width="10%" style="margin-top:2%;"/>
+								Hayley Williams | Franklin, TN</p>
+							</a>
+							</div></br>
+							<div style="display:inline-block; vertical-align:bottom;">
+							<a href="#">
+								<p style="float: left"><img src="http://blogs.utexas.edu/bonnecazegroup/files/2013/02/blank-profile-hi.png"
+									alt="" class="img-rounded img-responsive" height="10%" width="10%" style="margin-top:2%;"/>
+								Patrick Stump | Evanston, IL</p>
+							</a>
+							</div></br>
+							<div style="display:inline-block; vertical-align:bottom;">
+							<a href="#">
+								<p style="float: left"><img src="http://blogs.utexas.edu/bonnecazegroup/files/2013/02/blank-profile-hi.png"
+									alt="" class="img-rounded img-responsive" height="10%" width="10%" style="margin-top:2%;"/>
+								Adam Young | Owatonna, MN</p>
+							</a>
+							</div></br>
+	
+						</form>
+						</div>
+			
+						<!-- Thriends Tab -->
+						<div class="tab-pane fade" id="thriends">
+						<form id="tab2">
+					
+							<div>
+								<button class="btn btn-success">Add New Thriend(?)</button>
+							</div></br>
+							
+							<!-- Device Owner 's Device Type | Location -->
+							<div style="display:inline-block; vertical-align:bottom;">
+							<a href="#">
+								<p style="float: left"><img src="http://image.shutterstock.com/display_pic_with_logo/144463/144463,1263417199,1/stock-photo-old-school-boom-box-ghetto-blaster-cassette-radio-with-large-speakers-44442118.jpg"
+									alt="" class="img-rounded img-responsive" height="10%" width="10%" style="margin-top:2%;"/>
+								Richard Knight's Radio | Franklin, PA</p>
+							</a>
+							</div></br>
+							<div style="display:inline-block; vertical-align:bottom;">
+							<a href="#">
+								<p style="float: left"><img src="http://image.shutterstock.com/display_pic_with_logo/144463/144463,1263417199,1/stock-photo-old-school-boom-box-ghetto-blaster-cassette-radio-with-large-speakers-44442118.jpg"
+									alt="" class="img-rounded img-responsive" height="10%" width="10%" style="margin-top:2%;"/>
+								Richard Knight's Thermostat | Pittsburgh, PA</p>
+							</a>
+							</div></br>
+							<div style="display:inline-block; vertical-align:bottom;">
+							<a href="#">
+								<p style="float: left"><img src="http://image.shutterstock.com/display_pic_with_logo/144463/144463,1263417199,1/stock-photo-old-school-boom-box-ghetto-blaster-cassette-radio-with-large-speakers-44442118.jpg"
+									alt="" class="img-rounded img-responsive" height="10%" width="10%" style="margin-top:2%;"/>
+								Patrick Stump's Thermostat | Evanston, IL</p>
+							</a>
+							</div></br>
+							<div style="display:inline-block; vertical-align:bottom;">
+							<a href="#">
+								<p style="float: left"><img src="http://image.shutterstock.com/display_pic_with_logo/144463/144463,1263417199,1/stock-photo-old-school-boom-box-ghetto-blaster-cassette-radio-with-large-speakers-44442118.jpg"
+									alt="" class="img-rounded img-responsive" height="10%" width="10%" style="margin-top:2%;"/>
+								Ryan Ulanowicz's Radio | Los Angeles, CA</p>
+							</a>
+							</div></br>
+							<div style="display:inline-block; vertical-align:bottom;">
+							<a href="#">
+								<p style="float: left"><img src="http://image.shutterstock.com/display_pic_with_logo/144463/144463,1263417199,1/stock-photo-old-school-boom-box-ghetto-blaster-cassette-radio-with-large-speakers-44442118.jpg"
+									alt="" class="img-rounded img-responsive" height="10%" width="10%" style="margin-top:2%;"/>
+								Hayley Williams's Television | Franklin, TN</p>
+							</a>
+							</div></br>
+							<div style="display:inline-block; vertical-align:bottom;">
+							<a href="#">
+								<p style="float: left"><img src="http://image.shutterstock.com/display_pic_with_logo/144463/144463,1263417199,1/stock-photo-old-school-boom-box-ghetto-blaster-cassette-radio-with-large-speakers-44442118.jpg"
+									alt="" class="img-rounded img-responsive" height="10%" width="10%" style="margin-top:2%;"/>
+								Hayley Williams's Toaster | Franklin, TN</p>
+							</a>
+							</div></br>
+						
+						</form>
+						</div>
+				
+						<!-- Devices Tab -->
+						<div class="tab-pane fade" id="devices">
+						<form id="tab3">
+						
+							<div>
+								<button class="btn btn-success" id="test">Add New Device</button>
+							</div></br>
+							
+							<!-- Device Name | Device Type | Current Setting | Available Settings -->
+							<div style="display:inline-block; vertical-align:bottom;">
+							<a href="#">
+								<p style="float: left"><img src="http://image.shutterstock.com/display_pic_with_logo/144463/144463,1263417199,1/stock-photo-old-school-boom-box-ghetto-blaster-cassette-radio-with-large-speakers-44442118.jpg"
+									alt="" class="img-rounded img-responsive" height="10%" width="10%" style="margin-top:2%;"/>
+								My Thermostat | Thermostat | 65F | On/Off, Set</p>
+							</a>
+							</div></br>
+							<div style="display:inline-block; vertical-align:bottom;">
+							<a href="#">
+								<p style="float: left"><img src="http://image.shutterstock.com/display_pic_with_logo/144463/144463,1263417199,1/stock-photo-old-school-boom-box-ghetto-blaster-cassette-radio-with-large-speakers-44442118.jpg"
+									alt="" class="img-rounded img-responsive" height="10%" width="10%" style="margin-top:2%;"/>
+								My Jams | Radio | 101.6FM | On/Off, Set</p>
+							</a>
+							</div></br>
+							<div style="display:inline-block; vertical-align:bottom;">
+							<a href="#">
+								<p style="float: left"><img src="http://image.shutterstock.com/display_pic_with_logo/144463/144463,1263417199,1/stock-photo-old-school-boom-box-ghetto-blaster-cassette-radio-with-large-speakers-44442118.jpg"
+									alt="" class="img-rounded img-responsive" height="10%" width="10%" style="margin-top:2%;"/>
+								Light of My Life | Lamp | On | On/Off</p>
+							</a>
+							</div></br>
+							<div style="display:inline-block; vertical-align:bottom;">
+							<a href="#">
+								<p style="float: left"><img src="http://image.shutterstock.com/display_pic_with_logo/144463/144463,1263417199,1/stock-photo-old-school-boom-box-ghetto-blaster-cassette-radio-with-large-speakers-44442118.jpg"
+									alt="" class="img-rounded img-responsive" height="10%" width="10%" style="margin-top:2%;"/>
+								My TV | Television | Off | On/Off, Set</p>
+							</a>
+							</div></br>
+						
+						</form>
+						</div>
+					</div>
+			
+				</div>
+			</div>
+		</div>
+  
+	</body>
+</html>
+  
