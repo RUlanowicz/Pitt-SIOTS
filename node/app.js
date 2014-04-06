@@ -6,7 +6,7 @@ flash = require('connect-flash');
 
 //var = require('./routes');
 var path = require('path');
-var MYSQLSessionStore = require('connect-mysql-session')(express);
+//var MYSQLSessionStore = require('connect-mysql-session')(express);
 
 
 //app.set('port',proccess.env.PORT || 3001);
@@ -21,7 +21,7 @@ app.set('view engine', 'html');
 
 app.use(express.cookieParser());
 app.use(express.session({
-	store: new MYSQLSessionStore("siots","root","root", {}),
+	//store: new MYSQLSessionStore("siots","root","root", {}),
 	secret:'thisismysupersecret'
 }));
 
@@ -91,53 +91,43 @@ app.post('/device_reg', function(req, res) {
 });
 
 app.post('/registration', function(req, res, next) {
-	db.getConnection(function(err, connection) {
-		if (err) {
-			console.error('CONNECTION error: ',err);
-			res.statusCode = 503;
-			res.send({
-				result: 'error',
-				err: err.code
-			});
-		}
-		else {
-			// connection.query('INSERT INTO user(username, password, lastname, firstname, streetadd, city, state) VALUES(\''
-			// 	+ req.body.username + '\',\'' + req.body.password + '\',\'' + req.body.last_name + '\',\'' + req.body.first_name + '\',\''
-			// 	+ req.body.address + '\',\'' + req.body.city + '\',\'' + req.body.state + '\')', function(err, rows, fields) {
-			connection.query('INSERT INTO user(username, password, lastname, firstname, streetadd, city, state, country, gps_lat, gps_lon) VALUES(\''
-				+ req.body.username + '\',\'' + req.body.password + '\',\'' + req.body.last_name + '\',\'' + req.body.first_name + '\',\''
-				+ req.body.address + '\',\'' + req.body.city + '\',\'' + req.body.state + '\',\'USA\',\'20\',\'20\')', function(err, rows, fields) {
+	// db.getConnection(function(err, connection) {
+	// 	if (err) {
+	// 		console.error('CONNECTION error: ',err);
+	// 		res.statusCode = 503;
+	// 		res.send({
+	// 			result: 'error',
+	// 			err: err.code
+	// 		});
+	// 	}
+	// 	else {
+	// 		console.log('registration');
+	// 		// connection.query('INSERT INTO user(username, password, lastname, firstname, streetadd, city, state) VALUES(\''
+	// 		// 	+ req.body.username + '\',\'' + req.body.password + '\',\'' + req.body.last_name + '\',\'' + req.body.first_name + '\',\''
+	// 		// 	+ req.body.address + '\',\'' + req.body.city + '\',\'' + req.body.state + '\')', function(err, rows, fields) {
+	// 		connection.query('INSERT INTO user(username, password, lastname, firstname, streetadd, city, state, country, gps_lat, gps_lon) VALUES(\''
+	// 			+ req.body.username + '\',\'' + req.body.password + '\',\'' + req.body.last_name + '\',\'' + req.body.first_name + '\',\''
+	// 			+ req.body.address + '\',\'' + req.body.city + '\',\'' + req.body.state + '\',\'USA\',\'20\',\'20\')', function(err, rows, fields) {
 				
-				console.log('INSERT INTO user(username, password, lastname, firstname, streetadd, city, state, country, gps_lat, gps_lon) VALUES(\''
-				+ req.body.username + '\',\'' + req.body.password + '\',\'' + req.body.last_name + '\',\'' + req.body.first_name + '\',\''
-				+ req.body.address + '\',\'' + req.body.city + '\',\'' + req.body.state + '\',\'USA\',\'20\',\'20\')');
+	// 			// console.log('INSERT INTO user(username, password, lastname, firstname, streetadd, city, state, country, gps_lat, gps_lon) VALUES(\''
+	// 			// + req.body.username + '\',\'' + req.body.password + '\',\'' + req.body.last_name + '\',\'' + req.body.first_name + '\',\''
+	// 			// + req.body.address + '\',\'' + req.body.city + '\',\'' + req.body.state + '\',\'USA\',\'20\',\'20\')');
 
-				if (err) {
-					console.error(err);
-					res.statusCode = 500;
-					res.send({
-						result: 'error',
-						err: err.code
-					});
-				}
-				//res.writeHead(200, { 'Content-Type' : 'application/json' });
-
-				//res.contentType('application/json');
-
-				res.send({
-					success: true,
-					message: 'success'//,
-					// err: '',
-					// fields: fields,
-					// json:rows,
-					// length: rows.length
-				});
-				//	res.send(rows);
-				console.log("rows2: " + JSON.stringify(rows)); 
-				connection.release();
-			});
-		}
-	})
+	// 			if (err) {
+	// 				console.error(err);
+	// 				res.statusCode = 500;
+	// 				res.send({
+	// 					result: 'error',
+	// 					err: err.code
+	// 				});
+	// 			}
+	// 			console.log("new profile");
+	// 			res.render('profile',{username:"ryan"});
+	return res.send({ success : true, message :'authentication succeeded' });
+	// 			connection.release();
+	// 		});
+	// 	}
+	// })
 });
 
 app.get('/devices/:username', function(req,res,next){
@@ -151,7 +141,7 @@ app.get('/devices/:username', function(req,res,next){
 			});
 		}
 		else{
-			connection.query('SELECT * FROM device_instance WHERE belongTo = \''+req.params.username+'\'',function(err,rows,fields){
+			connection.query('select * from (device_status d natural join device_instance i) join device_capability_template where property_id = capability_id and belongTo = \''+req.params.username+'\'',function(err,rows,fields){
 				if (err) {
 					console.error(err);
 					res.statusCode = 500;
@@ -163,7 +153,7 @@ app.get('/devices/:username', function(req,res,next){
 				else{
 					console.log("====================");
 					console.log(JSON.stringify(rows));
-					res.render('example',{
+					res.render('user_devices',{
 						devices:rows,
 						title: "My Devices"
 					});

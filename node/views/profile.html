@@ -6,19 +6,12 @@
 		<script type="text/javascript"  language="javascript">
 
    	$(document).ready(function() {
-      $("#friends").click(function(event){
- 		$.ajax({
-			dataType: "json",
-			type: "POST", 
-			url: "//localhost:3001/device_registration", 
- 			contentType: 'application/json; charset=utf-8',
-			data: JSON.stringify(testobject), 
-			success: function (msg) {
-				console.log(JSON.stringify(msg));
-        	}
 
-			}); //ajax
-   		}); //login
+   		// $('#add_new_device_button').click(function(){
+   		// 	//alert("new device button fired");
+   		// 	console.log("new device button fired");
+   		// 	window.location.replace("http://localhost:3001/views/device_reg.html");
+   		// });
 
       $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
       	console.log("fired");
@@ -46,18 +39,6 @@
   				$(target).html(data);
   			}
   		})
-  	// 	if ($(target).is(':empty')) {
-   //  	$.ajax({
-   //    		type: "GET",
-   //    		url: "/article/",
-   //    		error: function(data){
-   //      	alert("There was a problem");
-   //    	},
-   //    	success: function(data){
-   //      	$(target).html(data);
-   //    	}
-  	// 	})
- 		// }
 		})
 
 	}) //docuemnt 
@@ -71,7 +52,7 @@
 	
 		<!-- User Name -->
 		<div class="col-md-12" style="margin-top:2%">
-			<p style="margin-left:2%;font-size:60">Josef Grzenda</p>
+			<p style="margin-left:2%;font-size:60"><%= username %></p>
 		</div>
 		
 		<!-- Profile Picture -->
@@ -203,43 +184,7 @@
 				
 						<!-- Devices Tab -->
 						<div class="tab-pane fade" id="devices">
-						<form id="tab3">
-						
-							<div>
-								<button class="btn btn-success" id="test">Add New Device</button>
-							</div></br>
-							
-							<!-- Device Name | Device Type | Current Setting | Available Settings -->
-							<div style="display:inline-block; vertical-align:bottom;">
-							<a href="#">
-								<p style="float: left"><img src="http://image.shutterstock.com/display_pic_with_logo/144463/144463,1263417199,1/stock-photo-old-school-boom-box-ghetto-blaster-cassette-radio-with-large-speakers-44442118.jpg"
-									alt="" class="img-rounded img-responsive" height="10%" width="10%" style="margin-top:2%;"/>
-								My Thermostat | Thermostat | 65F | On/Off, Set</p>
-							</a>
-							</div></br>
-							<div style="display:inline-block; vertical-align:bottom;">
-							<a href="#">
-								<p style="float: left"><img src="http://image.shutterstock.com/display_pic_with_logo/144463/144463,1263417199,1/stock-photo-old-school-boom-box-ghetto-blaster-cassette-radio-with-large-speakers-44442118.jpg"
-									alt="" class="img-rounded img-responsive" height="10%" width="10%" style="margin-top:2%;"/>
-								My Jams | Radio | 101.6FM | On/Off, Set</p>
-							</a>
-							</div></br>
-							<div style="display:inline-block; vertical-align:bottom;">
-							<a href="#">
-								<p style="float: left"><img src="http://image.shutterstock.com/display_pic_with_logo/144463/144463,1263417199,1/stock-photo-old-school-boom-box-ghetto-blaster-cassette-radio-with-large-speakers-44442118.jpg"
-									alt="" class="img-rounded img-responsive" height="10%" width="10%" style="margin-top:2%;"/>
-								Light of My Life | Lamp | On | On/Off</p>
-							</a>
-							</div></br>
-							<div style="display:inline-block; vertical-align:bottom;">
-							<a href="#">
-								<p style="float: left"><img src="http://image.shutterstock.com/display_pic_with_logo/144463/144463,1263417199,1/stock-photo-old-school-boom-box-ghetto-blaster-cassette-radio-with-large-speakers-44442118.jpg"
-									alt="" class="img-rounded img-responsive" height="10%" width="10%" style="margin-top:2%;"/>
-								My TV | Television | Off | On/Off, Set</p>
-							</a>
-							</div></br>
-						
-						</form>
+				
 						</div>
 					</div>
 			

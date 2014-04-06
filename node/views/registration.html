@@ -30,22 +30,32 @@
                         type: "POST", 
                         url: "//localhost:3001/registration", 
                         contentType: 'application/json; charset=utf-8',
-                        data: JSON.stringify(user), 
-                        success: function (msg) {
-                            console.log(JSON.stringify(msg));
-                            var obj = JSON.parse(JSON.stringify(msg));
-                            //redirect the page 
-                            if (obj.success) { window.location.replace("http://localhost:3001/views/profile.html");} 
-                            else if (!obj.success) { window.location.replace("http://localhost:3001/views/registration.html");}
-                        }
-                        
-                        //contentType: 'text/plain',
+                        data: JSON.stringify(user),
 
-                    },
-                    function(data, status) {
-                        alert("Status: " + status);
-                    }
-                    ); //ajax
+                        success: function (msg) {
+                    console.log(JSON.stringify(msg));
+                    var obj = JSON.parse(JSON.stringify(msg));
+                    //redirect the page 
+                    if (obj.success) { window.location.replace("http://localhost:3001/views/profile.html");} 
+                    else if (!obj.success) {window.location.replace("http://localhost:3001/views/login.html");}
+            }
+
+
+                    //     success: function (msg) {
+                    //         console.log(JSON.stringify(msg));
+                    //         var obj = JSON.parse(JSON.stringify(msg));
+                    //         //redirect the page 
+                    //         if (obj.success) { window.location.replace("http://localhost:3001/views/profile.html");} 
+                    //         else if (!obj.success) { window.location.replace("http://localhost:3001/views/registration.html");}
+                    //     }
+                        
+                    //     //contentType: 'text/plain',
+
+                    // },
+                    // function(data, status) {
+                    //     alert("Status: " + status);
+                    // }
+                    }); //ajax
                     console.log("I sent the request");
                 }); //login
             }) //docuemnt 
@@ -55,7 +65,7 @@
     <body>
         <div class="container">
             <div class="row">
-                <form class="form-horizontal" action='' method="POST">
+                <form class="form-horizontal" action=''>
                     <div id="legend">
                         <legend>Sign up (all fields required)</legend>
                     </div>
