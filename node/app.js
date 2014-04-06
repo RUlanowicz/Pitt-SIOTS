@@ -122,8 +122,10 @@ app.post('/registration', function(req, res, next) {
 	// 				});
 	// 			}
 	// 			console.log("new profile");
-	// 			res.render('profile',{username:"ryan"});
-	return res.send({ success : true, message :'authentication succeeded' });
+				res.render('profile',{username:"ryan"},function(err,html){
+					console.log("asldkfjasldfkjasdflkjsa");
+				});
+	//return res.send({ success : true, message :'authentication succeeded' });
 	// 			connection.release();
 	// 		});
 	// 	}
@@ -153,7 +155,7 @@ app.get('/devices/:username', function(req,res,next){
 				else{
 					console.log("====================");
 					console.log(JSON.stringify(rows));
-					res.render('user_devices',{
+					res.render('devices',{
 						devices:rows,
 						title: "My Devices"
 					});
