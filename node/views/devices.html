@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <style type="text/css">
+    body {
+      padding: 50px;
+      font: 13px Helvetica, Arial, sans-serif; }
+  </style>
+</head>
+<body>
+  <form id="add_new_device">
+  <div>
+    <a class="btn btn-large btn-info" href="device_reg.html">Add New Device</a>
+    </div></br>
+  </form>
+
+
+  <% devices.forEach(function(device){ %>
+    <div style="display:inline-block; vertical-align:bottom;">
+        <a href="#">
+          <p style="float: left"><img src="http://image.shutterstock.com/display_pic_with_logo/144463/144463,1263417199,1/stock-photo-old-school-boom-box-ghetto-blaster-cassette-radio-with-large-speakers-44442118.jpg"
+            alt="" class="img-rounded img-responsive" height="10%" width="10%" style="margin-top:2%;"/>
+              <%= device.deviceName %> | <%= device.deviceType %> | <%= device.indoorLocation %> | <%= device.communicationType %> | <%= device.property_name %> | <%= device.status %></p>
+        </a> 
+    </div></br>
+    <% }) %>
+</body>
+</html>
