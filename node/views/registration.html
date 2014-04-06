@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="utf-8">
+        <title>Social Network of Things</title>
+        <link href = "css/bootstrap.min.css" rel = "stylesheet">
+        <link href = "css/stylesheet_registration.css" rel = "stylesheet">
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <script type="text/javascript"  language="javascript">
+
+            $(document).ready(function() {
+                $("#user_reg_button").click(function(event){
+                    var user = {
+                        username:   $("#username").val(),
+                        password:   $("#password").val(),
+                        email:      $("#email").val(),
+                        first_name: $("#first_name").val(), 
+                        last_name:  $("#last_name").val(),
+                        address:    $("#address").val(),
+                        city:       $("#city").val(), 
+                        state:      $("#state").val()
+                    }
+
+                    console.log ("username: " + username + "password: " + password + "email: " + email + "first name: " + first_name + "last name: " + last_name + "address: " + address + "city: " + city + "state: " + state);
+                    console.log (user); 
+
+                    $.ajax({
+                        dataType: "json",
+                        type: "POST", 
+                        url: "//localhost:3001/registration", 
+                        contentType: 'application/json; charset=utf-8',
+                        data: JSON.stringify(user), 
+                        success: function (msg) {
+                            console.log(JSON.stringify(msg));
+                            var obj = JSON.parse(JSON.stringify(msg));
+                            //redirect the page 
+                            if (obj.success) { window.location.replace("http://localhost:3001/views/profile.html");} 
+                            else if (!obj.success) { window.location.replace("http://localhost:3001/views/registration.html");}
+                        }
+                        
+                        //contentType: 'text/plain',
+
+                    },
+                    function(data, status) {
+                        alert("Status: " + status);
+                    }
+                    ); //ajax
+                    console.log("I sent the request");
+                }); //login
+            }) //docuemnt 
+        </script>
+    </head>
+    
+    <body>
+        <div class="container">
+            <div class="row">
+                <form class="form-horizontal" action='' method="POST">
+                    <div id="legend">
+                        <legend>Sign up (all fields required)</legend>
+                    </div>
+                    
+                    <!-- COLUMN 1 -->
+                    <div class="col-md-6">
+                      <fieldset>
+                        <!-- Username -->
+                        <div class="control-group">
+                          <label class="control-label" for="username">Username</label>
+                          <div class="controls">
+                            <input type="text" id="username" name="username" maxlength="25">
+                            <p class="help-block">Username can contain any letters or numbers, without spaces (max 25 characters)</p>
+                          </div>
+                        </div>
+                        <!-- Password-->
+                        <div class="control-group">
+                          <label class="control-label" for="password">Password</label>
+                          <div class="controls">
+                            <input type="text" id="password" name="password">
+                            <p class="help-block">Password should be at least 8 characters</p>
+                          </div>
+                        </div>
+                        <!-- Retype Password -->
+                        <div class="control-group">
+                          <label class="control-label" for="password_retype">Retype Password</label>
+                          <div class="controls">
+                            <input type="text" id="password_retype" name="password_retype">
+                            <p class="help-block">Please retype your password</p>
+                          </div>
+                        </div>
+                        <!-- E-mail -->
+                        <div class="control-group">
+                          <label class="control-label" for="email">E-mail</label>
+                          <div class="controls">
+                            <input type="text" id="email" name="email">
+                            <p class="help-block">Please enter your E-mail</p>
+                          </div>
+                        </div>
+                        <!-- Sign up Button -->
+                        <div class="control-group">
+                            <div class="controls">
+                                <button class="btn btn-success" type="submit" id="user_reg_button" value="Submit" >Sign up!</button>
+                            </div>
+                        </div>
+                      </fieldset>
+                    </div>
+                    
+                    <!-- COLUMN 2 -->
+                    <div class="col-md-6">
+                      <fieldset>
+                      <!-- First Name -->
+                        <div class="control-group">
+                          <label class="control-label" for="first_name">First Name</label>
+                          <div class="controls">
+                            <input type="text" id="first_name" name="first_name" maxlength="25">
+                            <p class="help-block">Please enter your first name</p>
+                          </div>
+                        </div>
+                        <!-- Last Name -->
+                        <div class="control-group">
+                          <label class="control-label" for="last_name">Last Name</label>
+                          <div class="controls">
+                            <input type="text" id="last_name" name="last_name" maxlength="25">
+                            <p class="help-block">Please enter your last name</p>
+                          </div>
+                        </div>
+                        <!-- Address -->
+                        <div class="control-group">
+                          <label class="control-label" for="address">Address</label>
+                          <div class="controls">
+                            <input type="text" id="address" name="address" style="width:60%;">
+                            <p class="help-block">Please enter your street address</p>
+                          </div>
+                        </div>
+                        <!-- City -->
+                        <div class="control-group">
+                          <label class="control-label" for="city">City</label>
+                          <div class="controls">
+                            <input type="text" id="city" name="city">
+                            <p class="help-block">Please enter your city</p>
+                          </div>
+                        </div>
+                        <!-- State -->
+                        <div class="dropdown">
+                            <label class="control-label" for="state">State</label>
+                          <div class="controls">
+                            <select id="state" name="state" class="form-control" style="width:10%;">
+                                <option value="AL">AL</option>
+                                <option value="AK">AK</option>
+                                <option value="AZ">AZ</option>
+                                <option value="AR">AR</option>
+                                <option value="CA">CA</option>
+                                <option value="CO">CO</option>
+                                <option value="CT">CT</option>
+                                <option value="DE">DE</option>
+                                <option value="DC">DC</option>
+                                <option value="FL">FL</option>
+                                <option value="GA">GA</option>
+                                <option value="HI">HI</option>
+                                <option value="ID">ID</option>
+                                <option value="IL">IL</option>
+                                <option value="IN">IN</option>
+                                <option value="IA">IA</option>
+                                <option value="KS">KS</option>
+                                <option value="KY">KY</option>
+                                <option value="LA">LA</option>
+                                <option value="ME">ME</option>
+                                <option value="MD">MD</option>
+                                <option value="MA">MA</option>
+                                <option value="MI">MI</option>
+                                <option value="MN">MN</option>
+                                <option value="MS">MS</option>
+                                <option value="MO">MO</option>
+                                <option value="MT">MT</option>
+                                <option value="NE">NE</option>
+                                <option value="NV">NV</option>
+                                <option value="NH">NH</option>
+                                <option value="NJ">NJ</option>
+                                <option value="NM">NM</option>
+                                <option value="NY">NY</option>
+                                <option value="NC">NC</option>
+                                <option value="ND">ND</option>
+                                <option value="OH">OH</option>
+                                <option value="OK">OK</option>
+                                <option value="OR">OR</option>
+                                <option value="PA">PA</option>
+                                <option value="RI">RI</option>
+                                <option value="SC">SC</option>
+                                <option value="SD">SD</option>
+                                <option value="TN">TN</option>
+                                <option value="TX">TX</option>
+                                <option value="UT">UT</option>
+                                <option value="VT">VT</option>
+                                <option value="VA">VA</option>
+                                <option value="WA">WA</option>
+                                <option value="WV">WV</option>
+                                <option value="WI">WI</option>
+                                <option value="WY">WY</option>
+                            </select>
+                          </div>
+                        </div>
+                      </fieldset>
+                    </div>  
+                </form>
+            </div>
+        </div>
+    </body>
+</html>

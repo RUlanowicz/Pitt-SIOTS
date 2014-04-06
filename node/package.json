@@ -1,0 +1,15 @@
+{
+	"name": "siots",
+	"version": "0.0.1",
+	"description": "social internet of things",
+	"dependencies": {
+		"express": "*",
+		"passport": "*",
+		"passport-local": "*",
+		"ejs": "*",
+		"mysql": "*",
+		"connect-flash": "*",
+		"socket.io": "*",
+		"socket.io-client": "*"
+	}
+}

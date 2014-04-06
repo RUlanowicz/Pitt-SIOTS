@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="utf-8">
+        <title>Social Network of Things</title>
+        <link href = "css/bootstrap.min.css" rel = "stylesheet">
+        <link href = "css/stylesheet_device_reg.css" rel = "stylesheet">
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script type="text/javascript"  language="javascript">
+
+    $(document).ready(function() {
+      $("#regis_button").click(function(event){
+           var device = {
+            device_type:$("#device_type").val(),
+            brand:$("#brand").val(),
+            model:$("#model").val(),
+            communication:$("#communication").val(),
+            belong_to:"ryan",
+            indoor_location:$("#indoor_location").val(),
+            device_name:$("#device_name").val()
+            }
+        $.ajax({
+            dataType: "json",
+            type: "POST", 
+            url: "//localhost:3001/device_reg", 
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(device), 
+            success: function (msg) {
+                alert("I am successful");
+            },
+            error: function(e) {
+                var obj=JSON.parse(JSON.stringify(e));
+                if (obj.status == 200) { 
+                        alert ("I am 200 " + obj.status); 
+                }
+                else { 
+                alert ("I have an error" + JSON.stringify(e));
+                            console.log(e);
+                }
+            }
+            }); //ajax
+        }); //register
+    }) //docuemnt 
+    </script>
+    </head>
+    
+    <body>
+        <div class="container">
+            <div class="row">
+                <form class="form-horizontal" action='' method="POST">
+                    <div id="legend">
+                        <legend style="text-align:center;">Device Registration</legend>
+                    </div>
+                  <fieldset>
+                    <!-- Device Type -->
+                    <div class="control-group">
+                      <label class="control-label" for="device_type">Type of Device</label>
+                      <div class="controls">
+                        <input type="text" id="device_type" name="device_type">
+                        <p class="help-block">Please enter what kind of device this is</p>
+                      </div>
+                    </div>
+                    <!-- Brand -->
+                    <div class="control-group">
+                        <label class="control-label" for="brand">Brand</label>
+                        <div class="controls">
+                            <input type="text" id="brand" name="brand">
+                            <p class="help-block">Please enter the brand of the device</p>
+                        </div>
+                    </div>
+                    <!-- Model -->
+                    <div class="control-group">
+                        <label class="control-label" for="model">Model</label>
+                        <div class="controls">
+                            <input type="text" id="model" name="model">
+                            <p class="help-block">Please enter the model of the device</p>
+                        </div>
+                    </div>
+                    <!-- Communication -->
+                    <div class="control-group">
+                        <label class="control-label" for="communication">Communication</label>
+                        <div class="controls">
+                            <input type="text" id="communication" name="communication">
+                            <p class="help-block">Please enter the communication protocol of the device</p>
+                        </div>
+                    </div>
+                    <!-- Indoor Location -->
+                    <div class="control-group">
+                        <label class="control-label" for="indoor_location">Indoor Location</label>
+                        <div class="controls">
+                            <input type="text" id="indoor_location" name="indoor_location">
+                            <p class="help-block">Please enter the indoor location</p>
+                        </div>
+                    </div>
+                    <!-- Device Name -->
+                    <div class="control-group">
+                        <label class="control-label" for="device_name">Device Name</label>
+                        <div class="controls">
+                            <input type="text" id="device_name" name="device_name">
+                            <p class="help-block">Please enter the device name</p>
+                        </div>
+                    </div>
+                    <!-- Sign up Button -->
+                    <div class="control-group">
+                        <div class="controls">
+                            <button class="btn btn-success" id="regis_button" type="submit" value="Submit">Register</button>
+                        </div>
+                    </div>
+                  </fieldset>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>
