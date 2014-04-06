@@ -19,12 +19,47 @@
 
 			}); //ajax
    		}); //login
-      $(".nav nav-tabs").bind("click",function(event){
-      	console.log("device tab event fired");
-      	if ($(event.target).hasClass("my_tab")) { /* handle tab click */ }
-    	if ($(event.target).hasClass("my_tab_2")) { /* a different tab click */ }
-    	if ($(event.target).hasClass("my_tab_3")) { /* ... */ }
-      });
+
+      $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+      	console.log("fired");
+      	var target_url;
+  		var target = $(e.target).attr("href") // activated tab
+  		console.log(target);
+  		switch(target){
+  			case "#friends":
+
+  			break;
+  			case "#devices":
+  				target_url = "//localhost:3001/devices/ryan";
+  			break;
+  			case "#thriends":
+
+  			break;
+  		}
+  		$.ajax({
+  			type:"GET",
+  			url: target_url,
+  			error: function(data){
+  				console.log("There was a problem");
+  			},
+  			success: function(data){
+  				$(target).html(data);
+  			}
+  		})
+  	// 	if ($(target).is(':empty')) {
+   //  	$.ajax({
+   //    		type: "GET",
+   //    		url: "/article/",
+   //    		error: function(data){
+   //      	alert("There was a problem");
+   //    	},
+   //    	success: function(data){
+   //      	$(target).html(data);
+   //    	}
+  	// 	})
+ 		// }
+		})
+
 	}) //docuemnt 
 	</script>
 	</head>
