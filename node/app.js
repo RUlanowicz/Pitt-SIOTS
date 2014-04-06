@@ -48,14 +48,11 @@ app.post('/login', function(req, res, next) {
     		console.log ("user is not defined"); 
       
      	return res.send({ success : false, message : 'authentication failed' });
-     	// res.redirect('/front_end/loginpost.hml'); 
     	}
     	console.log ("user in return: " + user);
     	console.log ("=============================");
 		console.log(req.session.passport);
     	return res.send({ success : true, message :'authentication succeeded' });
-
-  //  res.redirect('/front_end/profile/profile.html');
   	})(req, res, next);
 });
 
@@ -91,45 +88,42 @@ app.post('/device_reg', function(req, res) {
 });
 
 app.post('/registration', function(req, res, next) {
-	// db.getConnection(function(err, connection) {
-	// 	if (err) {
-	// 		console.error('CONNECTION error: ',err);
-	// 		res.statusCode = 503;
-	// 		res.send({
-	// 			result: 'error',
-	// 			err: err.code
-	// 		});
-	// 	}
-	// 	else {
-	// 		console.log('registration');
-	// 		// connection.query('INSERT INTO user(username, password, lastname, firstname, streetadd, city, state) VALUES(\''
-	// 		// 	+ req.body.username + '\',\'' + req.body.password + '\',\'' + req.body.last_name + '\',\'' + req.body.first_name + '\',\''
-	// 		// 	+ req.body.address + '\',\'' + req.body.city + '\',\'' + req.body.state + '\')', function(err, rows, fields) {
-	// 		connection.query('INSERT INTO user(username, password, lastname, firstname, streetadd, city, state, country, gps_lat, gps_lon) VALUES(\''
-	// 			+ req.body.username + '\',\'' + req.body.password + '\',\'' + req.body.last_name + '\',\'' + req.body.first_name + '\',\''
-	// 			+ req.body.address + '\',\'' + req.body.city + '\',\'' + req.body.state + '\',\'USA\',\'20\',\'20\')', function(err, rows, fields) {
+	db.getConnection(function(err, connection) {
+		if (err) {
+			console.error('CONNECTION error: ',err);
+			res.statusCode = 503;
+			res.send({
+				result: 'error',
+				err: err.code
+			});
+		}
+		else {
+			console.log('registration');
+			// connection.query('INSERT INTO user(username, password, lastname, firstname, streetadd, city, state) VALUES(\''
+			// 	+ req.body.username + '\',\'' + req.body.password + '\',\'' + req.body.last_name + '\',\'' + req.body.first_name + '\',\''
+			// 	+ req.body.address + '\',\'' + req.body.city + '\',\'' + req.body.state + '\')', function(err, rows, fields) {
+			connection.query('INSERT INTO user(username, password, lastname, firstname, streetadd, city, state, country, gps_lat, gps_lon) VALUES(\''
+				+ req.body.username + '\',\'' + req.body.password + '\',\'' + req.body.last_name + '\',\'' + req.body.first_name + '\',\''
+				+ req.body.address + '\',\'' + req.body.city + '\',\'' + req.body.state + '\',\'USA\',\'20\',\'20\')', function(err, rows, fields) {
 				
-	// 			// console.log('INSERT INTO user(username, password, lastname, firstname, streetadd, city, state, country, gps_lat, gps_lon) VALUES(\''
-	// 			// + req.body.username + '\',\'' + req.body.password + '\',\'' + req.body.last_name + '\',\'' + req.body.first_name + '\',\''
-	// 			// + req.body.address + '\',\'' + req.body.city + '\',\'' + req.body.state + '\',\'USA\',\'20\',\'20\')');
+				// console.log('INSERT INTO user(username, password, lastname, firstname, streetadd, city, state, country, gps_lat, gps_lon) VALUES(\''
+				// + req.body.username + '\',\'' + req.body.password + '\',\'' + req.body.last_name + '\',\'' + req.body.first_name + '\',\''
+				// + req.body.address + '\',\'' + req.body.city + '\',\'' + req.body.state + '\',\'USA\',\'20\',\'20\')');
 
-	// 			if (err) {
-	// 				console.error(err);
-	// 				res.statusCode = 500;
-	// 				res.send({
-	// 					result: 'error',
-	// 					err: err.code
-	// 				});
-	// 			}
-	// 			console.log("new profile");
-				res.render('profile',{username:"ryan"},function(err,html){
-					console.log("asldkfjasldfkjasdflkjsa");
-				});
-	//return res.send({ success : true, message :'authentication succeeded' });
-	// 			connection.release();
-	// 		});
-	// 	}
-	// })
+				if (err) {
+					console.error(err);
+					res.statusCode = 500;
+					res.send({
+						result: 'error',
+						err: err.code
+					});
+				}
+				console.log("new profile");
+				res.render('profile',{username:"ryan"});
+				connection.release();
+			});
+		}
+	})
 });
 
 app.get('/devices/:username', function(req,res,next){

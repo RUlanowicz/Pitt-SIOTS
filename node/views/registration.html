@@ -30,15 +30,15 @@
                         type: "POST", 
                         url: "//localhost:3001/registration", 
                         contentType: 'application/json; charset=utf-8',
-                        data: JSON.stringify(user),
+                        data: JSON.stringify(user)
 
-                        success: function (msg) {
-                    console.log(JSON.stringify(msg));
-                    var obj = JSON.parse(JSON.stringify(msg));
-                    //redirect the page 
-                    if (obj.success) { window.location.replace("http://localhost:3001/views/profile.html");} 
-                    else if (!obj.success) {window.location.replace("http://localhost:3001/views/login.html");}
-            }
+            //             success: function (msg) {
+            //         console.log(JSON.stringify(msg));
+            //         var obj = JSON.parse(JSON.stringify(msg));
+            //         //redirect the page 
+            //         if (obj.success) { window.location.replace("http://localhost:3001/views/profile.html");} 
+            //         else if (!obj.success) {window.location.replace("http://localhost:3001/views/login.html");}
+            // }
 
 
                     //     success: function (msg) {
@@ -108,7 +108,7 @@
                         <!-- Sign up Button -->
                         <div class="control-group">
                             <div class="controls">
-                                <button class="btn btn-success" type="submit" id="user_reg_button" value="Submit" >Sign up!</button>
+                                <button class="btn btn-success" id="user_reg_button">Sign up!</button>
                             </div>
                         </div>
                       </fieldset>
