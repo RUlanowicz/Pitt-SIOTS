@@ -119,7 +119,7 @@ app.post('/registration', function(req, res, next) {
 					});
 				}
 				console.log("new profile");
-				res.render('profile',{username:"ryan"});
+			//	res.render('profile',{username:"ryan"});
 				connection.release();
 			});
 		}
@@ -159,6 +159,14 @@ app.get('/devices/:username', function(req,res,next){
 	});
 });
 //app.get('/device_registration', routes.device_registration);
+
+//this returns the rendering page of profile.html, 
+//the function can be called from login.html after login, or registration.html after registration 
+app.get ('/profile/:username', function(req, res, next) {
+	console.log ("/prifle/username username is " + req.params.username);
+
+	res.render('profile',{username:req.params.username});
+});
 
 console.log("Server running on port 3001");
 app.listen(3001);

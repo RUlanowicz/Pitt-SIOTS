@@ -24,7 +24,23 @@
 				console.log(JSON.stringify(msg));
 				var obj = JSON.parse(JSON.stringify(msg));
 				//redirect the page 
-				if (obj.success) { window.location.replace("http://localhost:3001/views/profile.html");} 
+				var profile_url = "//localhost:3001/profile/" + user.username ; 
+				console.log (profile_url);
+				if (obj.success) { 
+						// this will load profile page with a proper username
+						$.ajax({
+  							type:"GET",
+  							url: profile_url,
+  							error: function(data){
+  								console.log("There was a problem");
+  							},
+  							success: function(data){
+  								$('.container').html(data);
+  							}
+  						})
+				} //obj.success
+
+					//window.location.replace("http://localhost:3001/views/profile.html");} 
 				else if (!obj.success) {window.location.replace("http://localhost:3001/views/login.html");}
         	}
 
