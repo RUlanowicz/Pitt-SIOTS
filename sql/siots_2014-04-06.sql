@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.6.17)
 # Database: siots
-# Generation Time: 2014-04-06 22:05:11 +0000
+# Generation Time: 2014-04-07 01:20:27 +0000
 # ************************************************************
 
 
@@ -194,10 +194,10 @@ CREATE TABLE `indoor_location` (
 DROP TABLE IF EXISTS `relationship`;
 
 CREATE TABLE `relationship` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `relationship_temp_id` int(11) NOT NULL,
-  `subject_type` int(11) NOT NULL,
-  `object_type` int(11) NOT NULL,
+  `subject_type` varchar(50) NOT NULL DEFAULT '',
+  `object_type` varchar(50) NOT NULL DEFAULT '',
   `object_id` int(11) NOT NULL,
   `subject_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
@@ -295,7 +295,9 @@ VALUES
 	(129,'tammy','asdf','asdf','asdf','asdf 124jasdflkj','asdfasdf','AL','USA','20','20'),
 	(130,'james','asdf','ubob','asdf','123 tjas st.','asdf','AL','USA','20','20'),
 	(131,'ryan2','asldlksdjf','jfjfjjfkasdfkj','jfjfjfjfj','12444','jfjfj','AL','USA','20','20'),
-	(132,'ryan3','asdf','asdf','asdf','asdf 12','asdf','AL','USA','20','20');
+	(132,'ryan3','asdf','asdf','asdf','asdf 12','asdf','AL','USA','20','20'),
+	(133,'jimmy','','','','','','AL','USA','20','20'),
+	(134,'tim','','','','','','AL','USA','20','20');
 
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
