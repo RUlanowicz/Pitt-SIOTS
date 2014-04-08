@@ -30,31 +30,29 @@
                         type: "POST", 
                         url: "//localhost:3001/registration", 
                         contentType: 'application/json; charset=utf-8',
-                        data: JSON.stringify(user)
+                        data: JSON.stringify(user),
 
-            //             success: function (msg) {
-            //         console.log(JSON.stringify(msg));
-            //         var obj = JSON.parse(JSON.stringify(msg));
-            //         //redirect the page 
-            //         if (obj.success) { window.location.replace("http://localhost:3001/views/profile.html");} 
-            //         else if (!obj.success) {window.location.replace("http://localhost:3001/views/login.html");}
-            // }
-
-
-                    //     success: function (msg) {
-                    //         console.log(JSON.stringify(msg));
-                    //         var obj = JSON.parse(JSON.stringify(msg));
-                    //         //redirect the page 
-                    //         if (obj.success) { window.location.replace("http://localhost:3001/views/profile.html");} 
-                    //         else if (!obj.success) { window.location.replace("http://localhost:3001/views/registration.html");}
-                    //     }
-                        
-                    //     //contentType: 'text/plain',
-
-                    // },
-                    // function(data, status) {
-                    //     alert("Status: " + status);
-                    // }
+                         success: function (msg) {
+                             console.log(JSON.stringify(msg));
+                             var obj = JSON.parse(JSON.stringify(msg));
+                             //redirect the page 
+                            var profile_url = "//localhost:3001/profile/" + user.username ; 
+                            console.log (profile_url);
+                            if (obj.success) { 
+                        // this will load profile page with a proper username
+                                $.ajax({
+                                    type:"GET",
+                                    url: profile_url,
+                                    error: function(data){
+                                    console.log("There was a problem");
+                                    },
+                                    success: function(data){
+                                        $('.container').html(data);
+                                    }
+                                })
+                            }
+                             else if (!obj.success) { window.location.replace("http://localhost:3001/views/registration.html");}
+                         }
                     }); //ajax
                     console.log("I sent the request");
                 }); //login
@@ -65,7 +63,7 @@
     <body>
         <div class="container">
             <div class="row">
-                <form class="form-horizontal" action=''>
+                <!-- <form class="form-horizontal" action=''> -->
                     <div id="legend">
                         <legend>Sign up (all fields required)</legend>
                     </div>
@@ -210,7 +208,7 @@
                         </div>
                       </fieldset>
                     </div>  
-                </form>
+                <!--</form> -->
             </div>
         </div>
     </body>

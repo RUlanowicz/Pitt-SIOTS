@@ -23,7 +23,9 @@
 
   			break;
   			case "#devices":
-  				target_url = "//localhost:3001/devices/ryan";
+  				var device_owner = <%- JSON.stringify(username) %>; 
+  				target_url = "//localhost:3001/devices/" + device_owner;
+  				console.log(target_url);
   			break;
   			case "#thriends":
 

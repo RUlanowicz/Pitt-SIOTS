@@ -118,12 +118,18 @@ app.post('/registration', function(req, res, next) {
 						err: err.code
 					});
 				}
+				else {
+					console.log ("new user inserted.");
+    				return res.send({ success : true, message :'user registration is done' });
+				}
+
+
 				console.log("new profile");
 			//	res.render('profile',{username:"ryan"});
 				connection.release();
 			});
 		}
-	})
+	}) //db.connection
 });
 
 app.get('/devices/:username', function(req,res,next){
