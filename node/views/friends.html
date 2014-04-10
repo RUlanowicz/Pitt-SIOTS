@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+  		<meta charset="utf-8">
+	</head>
+
+	<body>
+  		<form id="add_new_friend">
+			<div>
+				<button class="btn btn-large btn-info" href="#">Add New Friend</button>
+			</div></br>
+		</form>
+
+
+  		<% friends.forEach(function(friend){ %>
+    		<div style="display:inline-block; vertical-align:bottom;">
+				<a href="#">
+					<p style="float: left"><img src="http://blogs.utexas.edu/bonnecazegroup/files/2013/02/blank-profile-hi.png"
+						alt="" class="img-rounded img-responsive" height="10%" width="10%" style="margin-top:2%;"/>
+							<%= friend.firstname %> <%= friend.lastname %> | <%= friend.streetadd %> <%= friend.city %>, <%= friend.state %>
+					</p>
+				</a>
+			</div></br>
+    	<% }) %>
+	</body>
+</html>
+
