@@ -1,0 +1,90 @@
+<html lang="en">
+	<head>
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<script type="text/javascript"  language="javascript">
+
+   	$(document).ready(function() {
+      $("#login_button").click(function(event){
+      	   var user = {
+            username: $("#username").val(),
+            password:$("#password").val(),
+        }
+
+        console.log ("username: " + username + "password: " + password); 
+        console.log (user); 
+
+ 		$.ajax({
+			dataType: "json",
+			type: "POST", 
+			url: "//localhost:3001/login", 
+ 			contentType: 'application/json; charset=utf-8',
+			data: JSON.stringify(user), 
+			success: function (msg) {
+				console.log(JSON.stringify(msg));
+				var obj = JSON.parse(JSON.stringify(msg));
+				//redirect the page 
+				var profile_url = "//localhost:3001/profile/" + user.username ; 
+				console.log (profile_url);
+				if (obj.success) { 
+						// this will load profile page with a proper username
+						$.ajax({
+  							type:"GET",
+  							url: profile_url,
+  							error: function(data){
+  								console.log("There was a problem");
+  							},
+  							success: function(data){
+  								$('.container').html(data);
+  							}
+  						})
+				} //obj.success
+
+					//window.location.replace("http://localhost:3001/views/profile.html");} 
+				else if (!obj.success) {window.location.replace("http://localhost:3001/views/login.html");}
+        	}
+
+			}); //ajax
+ 		console.log("I sent the request");
+   		}); //login
+	}) //docuemnt 
+	</script>
+	</head>
+
+	<body>
+
+
+		<div class="container">
+    		<div class="row">
+				<fieldset></br>
+			    	<div id="legend">
+			      		<legend class="">Login</legend>
+			    	</div>
+			      	<!-- Username -->
+			    	<div class="input-group">
+			      		<div class="input">
+			      			<span style="margin-right: 5px;">Username</span>
+			        		<input type="text" id="username" name="username" placeholder="Username" class="input-xlarge">
+			      		</div>
+			    	</div></br>
+			    	
+			      	<!-- Password -->
+			    	<div class="control-group">
+			      		<div class="controls">
+			      			<span style="margin-right: 5px;">Password</span>
+			        		<input type="password" id="password" name="password" placeholder="Password" class="input-xlarge">
+			      		</div>
+			    	</div></br>
+			    	
+			    	<!-- Button -->
+			    	<div class="control-group">
+			      		<div class="controls">
+			        		<button class="btn btn-success" id="login_button">Login</button>
+			      		</div>
+			    	</div>
+				</fieldset>
+			</div>
+		</div>
+
+	</body>
+</html>

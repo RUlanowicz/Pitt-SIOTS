@@ -1,0 +1,31 @@
+.container
+{
+	margin: 0 auto;
+	width: 50em;
+}
+
+.control-group
+{
+    margin: 0 auto;
+	width: 50em;
+	text-align:center;
+}
+
+.form-control
+{
+    margin: 0 auto;
+	width: 50em;
+	text-align:center;
+}
+
+.dropdown
+{
+    margin: 0 auto;
+	width: 50em;
+	text-align:center;
+}
+
+#checkboxes
+{
+    margin-bottom: 2%;
+}
