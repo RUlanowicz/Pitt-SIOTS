@@ -164,6 +164,73 @@ app.get('/devices/:username', function(req,res,next){
 		}
 	});
 });
+
+app.get('/friends/:username', function(req,res,next) {
+	db.getConnection(function(err,connection) {
+		if (err) {
+			console.error('CONNECTION error: ',err);
+			res.statusCode = 503;
+			res.send({
+				result: 'error',
+				err: err.code
+			});
+		}
+		else {
+			connection.query('SELECT * FROM ( SELECT * FROM relationship r1 JOIN user u1 ON r1.subject_id = u1.userid WHERE r1.relationship_temp_id = 1 AND u1.username = \''
+								+ req.params.username + '\') q1 JOIN user u2 ON q1.object_id = u2.userid',function(err,rows,fields){
+				if (err) {
+					console.error(err);
+					res.statusCode = 500;
+					res.send({
+						result: 'error',
+						err: err.code
+					});
+				}
+				else{
+					console.log("====================");
+					console.log(JSON.stringify(rows));
+					res.render('friends',{
+						friends : rows,
+						title : "My Friends"
+					});
+				}
+			});
+		}
+	})
+});
+
+app.get('/thriends/:username', function(req,res,next){
+	db.getConnection(function(err, connection) {
+		if (err) {
+			console.error('CONNECTION error: ',err);
+			res.statusCode = 503;
+			res.send({
+				result: 'error',
+				err: err.code
+			});
+		}
+		else{
+			connection.query('select * from ((relationship r join user u on r.subject_id = u.userid) join device_instance d on r.object_id = d.deviceId) where username = \''+req.params.username+'\' and relationship_temp_id = 5',function(err,rows,fields){
+				if (err) {
+					console.error(err);
+					res.statusCode = 500;
+					res.send({
+						result: 'error',
+						err: err.code
+					});
+				}
+				else{
+					console.log("====================");
+					console.log(JSON.stringify(rows));
+					res.render('thriends',{
+						thriends:rows,
+						title: "My Thriends"
+					});
+				}
+			});
+		}
+	});
+});
 //app.get('/device_registration', routes.device_registration);
 
 //this returns the rendering page of profile.html, 
@@ -172,6 +239,12 @@ app.get ('/profile/:username', function(req, res, next) {
 	console.log ("/prifle/username username is " + req.params.username);
 
 	res.render('profile',{username:req.params.username});
+});
+
+app.get ('/device_reg/:username', function(req, res, next) {
+	console.log ("/device_reg/username username is " + req.params.username);
+
+	res.render('device_reg', {username:req.params.username});
 });
 
 app.get('/users', function(req,res,next){

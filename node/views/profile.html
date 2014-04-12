@@ -18,19 +18,20 @@
       	var target_url;
   		var target = $(e.target).attr("href") // activated tab
   		console.log(target);
+  		var owner = <%- JSON.stringify(username) %>; 
   		switch(target){
   			case "#friends":
-
+  				target_url = "//localhost:3001/friends/" + owner;
   			break;
   			case "#devices":
-  				var device_owner = <%- JSON.stringify(username) %>; 
-  				target_url = "//localhost:3001/devices/" + device_owner;
-  				console.log(target_url);
+  				target_url = "//localhost:3001/devices/" + owner;
   			break;
   			case "#thriends":
-
+  				target_url = "//localhost:3001/thriends/" + owner;
   			break;
   		}
+  		console.log(target_url);
+
   		$.ajax({
   			type:"GET",
   			url: target_url,
