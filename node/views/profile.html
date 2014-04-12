@@ -3,16 +3,9 @@
 	<head>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 		<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
-		<script type="text/javascript"  language="javascript">
+	<script type="text/javascript"  language="javascript">
 
    	$(document).ready(function() {
-
-   		// $('#add_new_device_button').click(function(){
-   		// 	//alert("new device button fired");
-   		// 	console.log("new device button fired");
-   		// 	window.location.replace("http://localhost:3001/views/device_reg.html");
-   		// });
-
       $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
       	console.log("fired");
       	var target_url;
@@ -22,12 +15,15 @@
   		switch(target){
   			case "#friends":
   				target_url = "//localhost:3001/friends/" + owner;
+  				console.log(target_url);
   			break;
   			case "#devices":
   				target_url = "//localhost:3001/devices/" + owner;
+  				console.log(target_url);
   			break;
   			case "#thriends":
   				target_url = "//localhost:3001/thriends/" + owner;
+  				console.log(target_url);
   			break;
   		}
   		console.log(target_url);
@@ -39,13 +35,41 @@
   				console.log("There was a problem");
   			},
   			success: function(data){
-  				$(target).html(data);
+  				$(target).html(data)
   			}
-  		})
-		})
+  		});// ajax
+	   });
 
 	}) //docuemnt 
 	</script>
+	<script type="text/javascript"  language="javascript">
+	    $(document).ready(function() {
+	      $("#add_new_device_button").click(function(event){
+	        var owner = <%- JSON.stringify(username) %>; 
+	        //alert(owner);
+	        $.ajax({
+	            dataType: "HTML",
+	            type: "GET", 
+	            url: "//localhost:3001/device_reg/" + owner, 
+	            contentType: 'application/json; charset=utf-8', 
+	            success: function (msg) {
+	                $('.container').html(msg);
+	            },
+	            error: function(e) {
+	                var obj=JSON.parse(JSON.stringify(e));
+	                if (obj.status == 200) { 
+	                        alert ("I am 200 " + obj.status); 
+	                }
+	                else { 
+	                alert ("I have an error" + JSON.stringify(e));
+	                            console.log(e);
+	                }
+	            }
+	            }); //ajax
+	        }); //new device button
+	    }) //document ready 
+ 	</script>
+
 	</head>
 
 	<body>
@@ -66,6 +90,10 @@
 						alt="" class="img-rounded img-responsive" />
 				</div>
 			</div>
+
+			</br><div>
+	            <a class="btn btn-large btn-info" id="add_new_device_button" >Add New Device</a>
+        	</div>
 		</div>
 		
 		<!-- Tabs -->
@@ -134,9 +162,6 @@
 						<div class="tab-pane fade" id="thriends">
 						<form id="tab2">
 					
-							<div>
-								<button class="btn btn-success">Add New Thriend(?)</button>
-							</div></br>
 							
 							<!-- Device Owner 's Device Type | Location -->
 							<div style="display:inline-block; vertical-align:bottom;">

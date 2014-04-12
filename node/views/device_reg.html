@@ -11,15 +11,17 @@
 
     $(document).ready(function() {
       $("#regis_button").click(function(event){
+            alert("hi");
+           var owner = <%- JSON.stringify(username) %>; 
            var device = {
             device_type:$("#device_type").val(),
             brand:$("#brand").val(),
             model:$("#model").val(),
-            communication:$("#communication").val(),
-            belong_to:"ryan",
+            communication:$("#communication").val(), 
+            belong_to: owner,
             indoor_location:$("#indoor_location").val(),
             device_name:$("#device_name").val()
-            }
+           }
         $.ajax({
             dataType: "json",
             type: "POST", 
@@ -27,7 +29,27 @@
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(device), 
             success: function (msg) {
-                alert("I am successful");
+                console.log(JSON.stringify(msg));
+                var obj = JSON.parse(JSON.stringify(msg));
+                //redirect the page 
+                var profile_url = "//localhost:3001/profile/" + obj.username ; 
+                console.log (profile_url);
+                if (obj.success) { 
+                        // this will load profile page with a proper username
+                        $.ajax({
+                            type:"GET",
+                            url: profile_url,
+                            error: function(data){
+                                console.log("There was a problem");
+                            },
+                            success: function(data){
+                                $('.container').html(data);
+                            }
+                        })
+                } //obj.success
+
+                    //window.location.replace("http://localhost:3001/views/profile.html");} 
+                else if (!obj.success) {window.location.replace("http://localhost:3001/views/login.html");}
             },
             error: function(e) {
                 var obj=JSON.parse(JSON.stringify(e));
@@ -104,7 +126,7 @@
                     <!-- Sign up Button -->
                     <div class="control-group">
                         <div class="controls">
-                            <button class="btn btn-success" id="regis_button" type="submit" value="Submit">Register</button>
+                            <button class="btn btn-success" id="regis_button">Register</button>
                         </div>
                     </div>
                   </fieldset>
