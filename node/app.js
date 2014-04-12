@@ -115,9 +115,9 @@ app.post('/registration', function(req, res, next) {
 			// connection.query('INSERT INTO user(username, password, lastname, firstname, streetadd, city, state) VALUES(\''
 			// 	+ req.body.username + '\',\'' + req.body.password + '\',\'' + req.body.last_name + '\',\'' + req.body.first_name + '\',\''
 			// 	+ req.body.address + '\',\'' + req.body.city + '\',\'' + req.body.state + '\')', function(err, rows, fields) {
-			connection.query('INSERT INTO user(username, password, lastname, firstname, streetadd, city, state, country, gps_lat, gps_lon) VALUES(\''
+			connection.query('INSERT INTO user(username, password, lastname, firstname, streetadd, city, state, country, gps_lat, gps_lon, email) VALUES(\''
 				+ req.body.username + '\',\'' + req.body.password + '\',\'' + req.body.last_name + '\',\'' + req.body.first_name + '\',\''
-				+ req.body.address + '\',\'' + req.body.city + '\',\'' + req.body.state + '\',\'USA\',\'20\',\'20\')', function(err, rows, fields) {
+				+ req.body.address + '\',\'' + req.body.city + '\',\'' + req.body.state + '\',\'USA\',\'20\',\'20\',\''+req.body.email+'\')', function(err, rows, fields) {
 				
 				// console.log('INSERT INTO user(username, password, lastname, firstname, streetadd, city, state, country, gps_lat, gps_lon) VALUES(\''
 				// + req.body.username + '\',\'' + req.body.password + '\',\'' + req.body.last_name + '\',\'' + req.body.first_name + '\',\''
@@ -218,10 +218,43 @@ app.get ('/profile/:username', function(req, res, next) {
 	res.render('profile',{username:req.params.username});
 });
 
+<<<<<<< HEAD
 app.get ('/device_reg/:username', function(req, res, next) {
 	console.log ("/device_reg/username username is " + req.params.username);
 
 	res.render('device_reg', {username:req.params.username});
 });
+=======
+app.get('/users', function(req,res,next){
+	db.getConnection(function(err, connection) {
+		if (err) {
+			console.error('CONNECTION error: ',err);
+			res.statusCode = 503;
+			res.send({
+				result: 'error',
+				err: err.code
+			});
+		}
+		else{
+			connection.query('select username from user',function(err,rows,fields){
+				if (err) {
+					console.error(err);
+					res.statusCode = 500;
+					res.send({
+						result: 'error',
+						err: err.code
+					});
+				}
+				else{
+					console.log("====================");
+					console.log(JSON.stringify(rows));
+					res.send(rows);
+				}
+			});
+		}
+	});
+});
+
+>>>>>>> e05cceb1a4a61bb0bd17425b8f51abbc4be94d88
 console.log("Server running on port 3001");
 app.listen(3001);
