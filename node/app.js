@@ -58,14 +58,14 @@ app.post('/login', function(req, res, next) {
 
 app.post('/device_reg', function(req, res) {
 	db.getConnection(function(err, connection) {
-			if (err) {
-				console.error('CONNECTION error: ',err);
-				res.statusCode = 503;
-				res.send({
-					result: 'error',
-					err: err.code
-				});
-			} 
+		if (err) {
+			console.error('CONNECTION error: ',err);
+			res.statusCode = 503;
+			return res.send({
+				result: 'error',
+				err: err.code
+			});
+		} 
 		else {
 			connection.query('INSERT INTO device_instance(belongTo, deviceType, indoorLocation, deviceName, brand, model, communicationType) VALUES(\'' + req.body.belong_to + '\',\'' +
 								req.body.device_type + '\',\'' + req.body.indoor_location + '\',\'' + req.body.device_name + '\',\'' + req.body.brand + '\',\'' + req.body.model + '\',\'' + req.body.communication + '\')', function(err, rows, fields) {
@@ -78,22 +78,9 @@ app.post('/device_reg', function(req, res) {
 					});
 				}
 				else {
-					connection.query('INSERT INTO device_instance(belongTo, deviceType, indoorLocation, deviceName, brand, model, communicationType) VALUES(\'' + req.body.belong_to + '\',\'' +
-								req.body.device_type + '\',\'' + req.body.indoor_location + '\',\'' + req.body.device_name + '\',\'' + req.body.brand + '\',\'' + req.body.model + '\',\'' + req.body.communication + '\')', function(err, rows, fields) {
-						if (err) {
-							console.error(err);
-							res.statusCode = 500;
-							return res.send({
-								result: 'query error',
-								err: err.code
-							});
-						}
-						else {
-							
-					    	return res.send({ success : true, message :'insert device succeeded' });
-							connection.release();
-						}
-					});
+					
+			    	return res.send({ success : true, message :'insert device succeeded' });
+					connection.release();
 				}
 			});
 		}
@@ -112,16 +99,10 @@ app.post('/registration', function(req, res, next) {
 		}
 		else {
 			console.log('registration');
-			// connection.query('INSERT INTO user(username, password, lastname, firstname, streetadd, city, state) VALUES(\''
-			// 	+ req.body.username + '\',\'' + req.body.password + '\',\'' + req.body.last_name + '\',\'' + req.body.first_name + '\',\''
-			// 	+ req.body.address + '\',\'' + req.body.city + '\',\'' + req.body.state + '\')', function(err, rows, fields) {
+
 			connection.query('INSERT INTO user(username, password, lastname, firstname, streetadd, city, state, country, gps_lat, gps_lon, email) VALUES(\''
 				+ req.body.username + '\',\'' + req.body.password + '\',\'' + req.body.last_name + '\',\'' + req.body.first_name + '\',\''
 				+ req.body.address + '\',\'' + req.body.city + '\',\'' + req.body.state + '\',\'USA\',\'20\',\'20\',\''+req.body.email+'\')', function(err, rows, fields) {
-				
-				// console.log('INSERT INTO user(username, password, lastname, firstname, streetadd, city, state, country, gps_lat, gps_lon) VALUES(\''
-				// + req.body.username + '\',\'' + req.body.password + '\',\'' + req.body.last_name + '\',\'' + req.body.first_name + '\',\''
-				// + req.body.address + '\',\'' + req.body.city + '\',\'' + req.body.state + '\',\'USA\',\'20\',\'20\')');
 
 				if (err) {
 					console.error(err);
@@ -136,11 +117,11 @@ app.post('/registration', function(req, res, next) {
     				return res.send({ success : true, message :'user registration is done' });
 				}
 
-			//	res.render('profile',{username:"ryan"});
+				//	res.render('profile',{username:"ryan"});
 				connection.release();
 			});
 		}
-	}) //db.connection
+	}); //db.connection
 });
 
 app.get('/devices/:username', function(req,res,next){
@@ -208,6 +189,42 @@ app.get('/thriends/:username', function(req,res,next){
 		}
 	});
 });
+
+app.get('/friends/:username', function(req,res,next) {
+	db.getConnection(function(err,connection) {
+		if (err) {
+			console.error('CONNECTION error: ',err);
+			res.statusCode = 503;
+			res.send({
+				result: 'error',
+				err: err.code
+			});
+		}
+		else {
+			connection.query('SELECT * FROM ( SELECT * FROM relationship r1 JOIN user u1 ON r1.subject_id = u1.userid WHERE r1.relationship_temp_id = 1 AND u1.username = \''
+								+ req.params.username + '\') q1 JOIN user u2 ON q1.object_id = u2.userid',function(err,rows,fields){
+				if (err) {
+					console.error(err);
+					res.statusCode = 500;
+					res.send({
+						result: 'error',
+						err: err.code
+					});
+				}
+				else{
+					console.log("====================");
+					console.log(JSON.stringify(rows));
+					res.render('friends',{
+						friends : rows,
+						title : "My Friends"
+					});
+				}
+			});
+		}
+	});
+});
+
+
 //app.get('/device_registration', routes.device_registration);
 
 //this returns the rendering page of profile.html, 
@@ -218,13 +235,14 @@ app.get ('/profile/:username', function(req, res, next) {
 	res.render('profile',{username:req.params.username});
 });
 
-<<<<<<< HEAD
+
 app.get ('/device_reg/:username', function(req, res, next) {
 	console.log ("/device_reg/username username is " + req.params.username);
 
 	res.render('device_reg', {username:req.params.username});
 });
-=======
+
+
 app.get('/users', function(req,res,next){
 	db.getConnection(function(err, connection) {
 		if (err) {
@@ -255,6 +273,5 @@ app.get('/users', function(req,res,next){
 	});
 });
 
->>>>>>> e05cceb1a4a61bb0bd17425b8f51abbc4be94d88
 console.log("Server running on port 3001");
 app.listen(3001);
