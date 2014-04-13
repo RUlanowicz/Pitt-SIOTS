@@ -57,6 +57,9 @@ app.post('/login', function(req, res, next) {
 });
 
 app.post('/device_reg', function(req, res) {
+	var device_id;
+	var device_type;
+	var prop_list;
 	db.getConnection(function(err, connection) {
 		if (err) {
 			console.error('CONNECTION error: ',err);
@@ -77,9 +80,59 @@ app.post('/device_reg', function(req, res) {
 						err: err.code
 					});
 				}
-				else {
-					
-			    	return res.send({ success : true, message :'insert device succeeded' });
+			});
+			connection.query('select deviceId, deviceType from device_instance order by deviceId desc limit 1',function(err,rows,fields){
+				if(err){
+					console.error(err);
+					res.statusCode = 500;
+					return res.send({
+						result: 'query error',
+						err: err.code
+					});
+				}
+				else{
+					var temp = JSON.parse(JSON.stringify(rows));
+					device_id = temp[0].deviceId;
+					device_type = temp[0].deviceType;
+					connection.query('select capabilities from device_template where deviceType = \''+device_type+'\'',function(err,rows,fields){
+						if(err){
+						console.error(err);
+						res.statusCode = 500;
+						return res.send({
+							result: 'query error',
+							err: err.code
+						});
+					}
+					else
+					{
+						var capi = JSON.parse(JSON.stringify(rows));
+						capi = capi[0].capabilities;
+						console.log("capi===================++++");
+						console.log(capi);
+						var exploded = capi.split(",");
+						console.log(exploded);
+						console.log(exploded.length);
+						for(var i=0;i < exploded.length; i++){
+							console.log(exploded[i]);
+							if(exploded[i].indexOf("property") != -1){
+								console.log('we have a property');
+								to_insert = exploded[i].trim();
+								console.log(to_insert);
+								connection.query('select capability_id from device_capability_template where capability_name = \''+to_insert+'\'',function(err,rows,fields){
+									var prop_id = JSON.parse(JSON.stringify(rows));
+									prop_id = prop_id[0].capability_id;
+									console.log(prop_id);
+									console.log(device_id);
+									console.log('insert into device_status (deviceId, property_id) values(\''+device_id+'\',\''+prop_id+'\')');
+									connection.query('insert into device_status (deviceId, property_id) values(\''+device_id+'\',\''+prop_id+'\')',function(err,rows,fields){
+
+									});
+								});
+							}
+						}
+					}
+					});
+					return res.send({ success : true, message :'insert device succeeded' });
 					connection.release();
 				}
 			});
