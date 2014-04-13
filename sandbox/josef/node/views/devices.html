@@ -1,38 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-
-  <script type="text/javascript"  language="javascript">
-    $(document).ready(function() {
-      $("#add_new_device_button").click(function(event){
-        var owner = <%- JSON.stringify(username) %>; 
-        alert(owner);
-        $.ajax({
-            dataType: "json",
-            type: "GET", 
-            url: "//localhost:3001/device_reg/" + owner, 
-            contentType: 'application/json; charset=utf-8', 
-            success: function (msg) {
-                console.log(JSON.stringify(msg));
-            },
-            error: function(e) {
-                var obj=JSON.parse(JSON.stringify(e));
-                if (obj.status == 200) { 
-                        alert ("I am 200 " + obj.status); 
-                }
-                else { 
-                alert ("I have an error" + JSON.stringify(e));
-                            console.log(e);
-                }
-            }
-            }); //ajax
-        }); //register
-    }) //document ready 
-  </script>
-</head>
-
+    <head>
+        <link href = "css/bootstrap.min.css" rel = "stylesheet">
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src ="js/siot.js"></script>
+    </head>
 <body>
+<div class="container">      
+ <!--  
+    <div>
+        <a class="btn btn-large btn-info" id="add_new_device_button" href="javascript:window.open('document.aspx','mywindowtitle','width=500,height=150')" >Add New Device</a>
+    </div></br>
+-->
+
+    <div class="controls">
+        <button class="btn btn-success" id="add_new_device_button">Add New Device</button>
+    </div>
 
   <% devices.forEach(function(device){ %>
     <div style="display:inline-block; vertical-align:bottom;">
@@ -43,5 +27,7 @@
         </a> 
     </div></br>
     <% }) %>
+</div>
+
 </body>
 </html>

@@ -1,59 +1,13 @@
 <html lang="en">
-
 	<head>
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-		<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
-	<script type="text/javascript"  language="javascript">
-
-   	$(document).ready(function() {
-
-   		// $('#add_new_device_button').click(function(){
-   		// 	//alert("new device button fired");
-   		// 	console.log("new device button fired");
-   		// 	window.location.replace("http://localhost:3001/views/device_reg.html");
-   		// });
-
-      $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-      	console.log("fired");
-      	var target_url;
-  		var target = $(e.target).attr("href") // activated tab
-  		console.log(target);
-  		var owner = <%- JSON.stringify(username) %>; 
-  		switch(target){
-  			case "#friends":
-  				target_url = "//localhost:3001/friends/" + owner;
-  				console.log(target_url);
-  			break;
-  			case "#devices":
-  				target_url = "//localhost:3001/devices/" + owner;
-  				console.log(target_url);
-  			break;
-  			case "#thriends":
-  				target_url = "//localhost:3001/thriends/" + owner;
-  				console.log(target_url);
-  			break;
-  		}
-  		$.ajax({
-  			type:"GET",
-  			url: target_url,
-  			error: function(data){
-  				console.log("There was a problem");
-  			},
-  			success: function(data){
-  				$(target).html(data);
-  			}
-  		})
-		})
-
-	}) //docuemnt 
-	</script>
+		<link href = "css/bootstrap.min.css" rel = "stylesheet">
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+				<script src="js/bootstrap.min.js"></script>
+		<script src ="js/siot.js"></script>
 	</head>
 
 	<body>
-		<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-		<script src="js/bootstrap.min.js"></script>
-		<script type="text/javascript"></script>
-	
+		<div id="update">
 		<!-- User Name -->
 		<div class="col-md-12" style="margin-top:2%">
 			<p style="margin-left:2%;font-size:60"><%= username %></p>
@@ -67,11 +21,14 @@
 						alt="" class="img-rounded img-responsive" />
 				</div>
 			</div>
-			<form id="add_new_device">
+			<!--<form id="add_new_device"> -->
+  			<!-- moved to devices.html -->
+  			<!-- 
   				<div>
     				<a class="btn btn-large btn-info" id="add_new_device_button" >Add New Device</a>
     			</div></br>
-  			</form>
+			-->
+  			<!--</form> -->
 		</div>
 		
 		<!-- Tabs -->
@@ -190,14 +147,14 @@
 				
 						<!-- Devices Tab -->
 						<div class="tab-pane fade" id="devices">
-				
+						<form id="tab3">	
+						</form>			
 						</div>
 					</div>
 			
 				</div>
 			</div>
-		</div>
-  
+</update>
 	</body>
 </html>
   

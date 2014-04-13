@@ -204,10 +204,11 @@ app.get ('/profile/:username', function(req, res, next) {
 	res.render('profile',{username:req.params.username});
 });
 
+// this is called from profile.html when the user clicks "Add New Device button" 
 app.get ('/device_reg/:username', function(req, res, next) {
 	console.log ("/device_reg/username username is " + req.params.username);
-
 	res.render('device_reg', {username:req.params.username});
 });
+
 console.log("Server running on port 3001");
 app.listen(3001);
