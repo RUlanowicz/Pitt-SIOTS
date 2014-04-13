@@ -1,6 +1,8 @@
 <html lang="en">
 	<head>
+
 		<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+		<link rel="stylesheet" type="text/css" href="css/stylesheet_login.css">
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 	<script type="text/javascript"  language="javascript">
 
@@ -53,15 +55,14 @@
 
 	<body>
 
-
-		<div class="container">
+		<div class="container" id="login_box">
     		<div class="row">
 				<fieldset></br>
 			    	<div id="legend">
-			      		<legend class="">Login</legend>
+			      		<legend class="" id="actual_legend">The Social Internet of Things</legend>
 			    	</div>
 			      	<!-- Username -->
-			    	<div class="input-group">
+			    	<div class="input-group" id="username_box">
 			      		<div class="input">
 			      			<span style="margin-right: 5px;">Username</span>
 			        		<input type="text" id="username" name="username" placeholder="Username" class="input-xlarge">
@@ -76,10 +77,17 @@
 			      		</div>
 			    	</div></br>
 			    	
-			    	<!-- Button -->
+			    	<!-- Login Button -->
 			    	<div class="control-group">
 			      		<div class="controls">
 			        		<button class="btn btn-success" id="login_button">Login</button>
+			      		</div>
+			    	</div>
+			    	</br>
+			    	<!-- Register Button -->
+			    	<div class="control-group">
+			      		<div class="controls">
+			        		<a class="btn btn-success" id="register_button" href="registration.html">Register</a>
 			      		</div>
 			    	</div>
 				</fieldset>

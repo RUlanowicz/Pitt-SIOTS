@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+    </head>
+
+    <body>
+
+        <% thriends.forEach(function(thriends){ %>
+            <div style="display:inline-block; vertical-align:bottom;">
+                <a href="#">
+                    <p style="float: left">
+                        <img src="appliances.png" class="img-rounded img-responsive" height="10%" width="10%" style="margin-top:2%;"/>
+                        <%= thriends.deviceName %> | <%= thriends.belongTo %>'s <%= thriends.deviceType %> | <%= thriends.indoorLocation %> | <%= thriends.communicationType %>
+                    </p>
+                </a> 
+            </div></br>
+        <% }) %>
+    </body>
+</html>

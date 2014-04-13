@@ -57,29 +57,29 @@ app.post('/login', function(req, res, next) {
 });
 
 app.post('/device_reg', function(req, res) {
-	console.log('HELOOOOOOOOO');
 	db.getConnection(function(err, connection) {
-			if (err) {
-				console.error('CONNECTION error: ',err);
-				res.statusCode = 503;
-				res.send({
-					result: 'error',
-					err: err.code
-				});
-			} 
+		if (err) {
+			console.error('CONNECTION error: ',err);
+			res.statusCode = 503;
+			return res.send({
+				result: 'error',
+				err: err.code
+			});
+		} 
 		else {
 			connection.query('INSERT INTO device_instance(belongTo, deviceType, indoorLocation, deviceName, brand, model, communicationType) VALUES(\'' + req.body.belong_to + '\',\'' +
 								req.body.device_type + '\',\'' + req.body.indoor_location + '\',\'' + req.body.device_name + '\',\'' + req.body.brand + '\',\'' + req.body.model + '\',\'' + req.body.communication + '\')', function(err, rows, fields) {
 				if (err) {
 					console.error(err);
 					res.statusCode = 500;
-					res.send({
+					return res.send({
 						result: 'query error',
 						err: err.code
 					});
 				}
 				else {
-					res.send(rows);
+					
+			    	return res.send({ success : true, message :'insert device succeeded' });
 					connection.release();
 				}
 			});
@@ -99,21 +99,15 @@ app.post('/registration', function(req, res, next) {
 		}
 		else {
 			console.log('registration');
-			// connection.query('INSERT INTO user(username, password, lastname, firstname, streetadd, city, state) VALUES(\''
-			// 	+ req.body.username + '\',\'' + req.body.password + '\',\'' + req.body.last_name + '\',\'' + req.body.first_name + '\',\''
-			// 	+ req.body.address + '\',\'' + req.body.city + '\',\'' + req.body.state + '\')', function(err, rows, fields) {
-			connection.query('INSERT INTO user(username, password, lastname, firstname, streetadd, city, state, country, gps_lat, gps_lon) VALUES(\''
+
+			connection.query('INSERT INTO user(username, password, lastname, firstname, streetadd, city, state, country, gps_lat, gps_lon, email) VALUES(\''
 				+ req.body.username + '\',\'' + req.body.password + '\',\'' + req.body.last_name + '\',\'' + req.body.first_name + '\',\''
-				+ req.body.address + '\',\'' + req.body.city + '\',\'' + req.body.state + '\',\'USA\',\'20\',\'20\')', function(err, rows, fields) {
-				
-				// console.log('INSERT INTO user(username, password, lastname, firstname, streetadd, city, state, country, gps_lat, gps_lon) VALUES(\''
-				// + req.body.username + '\',\'' + req.body.password + '\',\'' + req.body.last_name + '\',\'' + req.body.first_name + '\',\''
-				// + req.body.address + '\',\'' + req.body.city + '\',\'' + req.body.state + '\',\'USA\',\'20\',\'20\')');
+				+ req.body.address + '\',\'' + req.body.city + '\',\'' + req.body.state + '\',\'USA\',\'20\',\'20\',\''+req.body.email+'\')', function(err, rows, fields) {
 
 				if (err) {
 					console.error(err);
 					res.statusCode = 500;
-					res.send({
+					 return res.send({
 						result: 'error',
 						err: err.code
 					});
@@ -123,13 +117,11 @@ app.post('/registration', function(req, res, next) {
     				return res.send({ success : true, message :'user registration is done' });
 				}
 
-
-				console.log("new profile");
-			//	res.render('profile',{username:"ryan"});
+				//	res.render('profile',{username:"ryan"});
 				connection.release();
 			});
 		}
-	}) //db.connection
+	}); //db.connection
 });
 
 app.get('/devices/:username', function(req,res,next){
@@ -143,7 +135,40 @@ app.get('/devices/:username', function(req,res,next){
 			});
 		}
 		else{
-			connection.query('select * from (device_status d natural join device_instance i) join device_capability_template where property_id = capability_id and belongTo = \''+req.params.username+'\'',function(err,rows,fields){
+			connection.query('select * from (device_status d join device_instance i on d.deviceId = i.deviceId) join device_capability_template WHERE property_id = capability_id AND belongTo = \''+ req.params.username +'\'',function(err,rows,fields){
+				if (err) {
+					console.esrror(err);
+					res.statusCode = 500;
+					res.send({
+						result: 'error',
+						err: err.code
+					});
+				}
+				else{
+					console.log("====================");
+					console.log(rows);
+					res.render('devices',{
+						devices:rows,
+						title: "My Devices"
+					});
+				}
+			});
+		}
+	});
+});
+
+app.get('/thriends/:username', function(req,res,next){
+	db.getConnection(function(err, connection) {
+		if (err) {
+			console.error('CONNECTION error: ',err);
+			res.statusCode = 503;
+			res.send({
+				result: 'error',
+				err: err.code
+			});
+		}
+		else{
+			connection.query('select * from ((relationship r join user u on r.subject_id = u.userid) join device_instance d on r.object_id = d.deviceId) where username = \''+req.params.username+'\' and relationship_temp_id = 5',function(err,rows,fields){
 				if (err) {
 					console.error(err);
 					res.statusCode = 500;
@@ -155,23 +180,96 @@ app.get('/devices/:username', function(req,res,next){
 				else{
 					console.log("====================");
 					console.log(JSON.stringify(rows));
-					res.render('devices',{
-						devices:rows,
-						title: "My Devices"
+					res.render('thriends',{
+						thriends:rows,
+						title: "My Thriends"
 					});
 				}
 			});
 		}
 	});
 });
+
+app.get('/friends/:username', function(req,res,next) {
+	db.getConnection(function(err,connection) {
+		if (err) {
+			console.error('CONNECTION error: ',err);
+			res.statusCode = 503;
+			res.send({
+				result: 'error',
+				err: err.code
+			});
+		}
+		else {
+			connection.query('SELECT * FROM ( SELECT * FROM relationship r1 JOIN user u1 ON r1.subject_id = u1.userid WHERE r1.relationship_temp_id = 1 AND u1.username = \''
+								+ req.params.username + '\') q1 JOIN user u2 ON q1.object_id = u2.userid',function(err,rows,fields){
+				if (err) {
+					console.error(err);
+					res.statusCode = 500;
+					res.send({
+						result: 'error',
+						err: err.code
+					});
+				}
+				else{
+					console.log("====================");
+					console.log(JSON.stringify(rows));
+					res.render('friends',{
+						friends : rows,
+						title : "My Friends"
+					});
+				}
+			});
+		}
+	});
+});
+
+app.get('/users', function(req,res,next) {
+	db.getConnection(function(err,connection) {
+		if (err) {
+			console.error('CONNECTION error: ',err);
+			res.statusCode = 503;
+			res.send({
+				result: 'error',
+				err: err.code
+			});
+		}
+		else {
+			connection.query('SELECT username FROM user',function(err,rows,fields){
+				if (err) {
+					console.error(err);
+					res.statusCode = 500;
+					res.send({
+						result: 'error',
+						err: err.code
+					});
+				}
+				else{
+					console.log("====================");
+					console.log(JSON.stringify(rows));
+					res.send(rows);
+				}
+			});
+		}
+	});
+});
+
+
 //app.get('/device_registration', routes.device_registration);
 
 //this returns the rendering page of profile.html, 
 //the function can be called from login.html after login, or registration.html after registration 
 app.get ('/profile/:username', function(req, res, next) {
-	console.log ("/prifle/username username is " + req.params.username);
+	console.log ("/profile/username username is " + req.params.username);
 
 	res.render('profile',{username:req.params.username});
+});
+
+
+app.get ('/device_reg/:username', function(req, res, next) {
+	console.log ("/device_reg/username username is " + req.params.username);
+
+	res.render('device_reg.html', {username:req.params.username});
 });
 
 console.log("Server running on port 3001");

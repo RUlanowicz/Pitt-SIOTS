@@ -1,42 +1,134 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta charset="utf-8">
-        <title>Social Network of Things</title>
-        <link href = "css/bootstrap.min.css" rel = "stylesheet">
-        <link href = "css/stylesheet_friend_reg.css" rel = "stylesheet">
-    </head>
+<head>
+<meta charset="utf-8">
+<title>jQuery UI Autocomplete - Default functionality</title>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+<script>
+$(function () {
+  //   var data = function(){
+  //       $.ajax({
+  //           url: "//localhost:3001/users",
+  //           type: "GET",
+  //       })
+  //   }
+  // $("#search").autocomplete({
+  //     source: function (request, response) {
+  //        $.ajax({
+  //           url: "//localhost:3001/users",
+  //           type: "GET",
+  //           data: request,  // request is the value of search input
+  //           success: function (data) {
+  //               console.log(data);
+  //             //Map response values to fiedl label and value
+  //              response($.map(data, function (el) {
+  //                 return {
+  //                    label: el.username,
+  //                    value: el.userid
+  //                 };
+  //                 }));
+  //              }
+  //           });
+  //        },
+         
+  //        // The minimum number of characters a user must type before a search is performed.
+  //        minLength: 3, 
+         
+  //        // set an onFocus event to show the result on input field when result is focused
+  //        focus: function (event, ui) { 
+  //           this.value = ui.item.label; 
+  //           // Prevent other event from not being execute
+  //           event.preventDefault();
+  //        },
+  //        select: function (event, ui) {
+  //           // Prevent value from being put in the input:
+  //           this.value = ui.item.label;
+  //           // Set the id to the next input hidden field
+  //           $(this).next("input").val(ui.item.value); 
+  //           // Prevent other event from not being execute            
+  //           event.preventDefault();
+  //           // optionnal: submit the form after field has been filled up
+  //           //$('#quicksearch').submit();
+  //        },
+  //        search: function(oEvent, oUi) {
+  //           var selectedValue = $(oEvent.target).val();
+  //           var aSearch = [];
+  //           $('source').each(function(index, value) {
+  //               if (value.substr(0, selectedValue .length) == selectedValue ) 
+  //                   aSearch.push(value);               
+  //           });
 
-    <body>
-       
-        <script>
-            (function() {
-            var cx = '015739123978390230504:rrfu2k-oy3s';
-            var gcse = document.createElement('script');
-            gcse.type = 'text/javascript';
-            gcse.async = true;
-            gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
-                '//www.google.com/cse/cse.js?cx=' + cx;
-            var s = document.getElementsByTagName('script')[0];
-            s.parentNode.insertBefore(gcse, s);
-            })();
-        </script>
-        <gcse:search></gcse:search>
-        
-        <div class="container" style=text-align:center;">
-            <div class="row">
-                <form class="form-horizontal" action='' method="GET">
-                    <fieldset>
-                        <div class="control-group">
-                          <label class="control-label" for="search">Search for a friend:</label>
-                          <div class="controls">
-                            <input type="text" id="search" name="search" style="width:40%">
-                          </div>
-                        </div>
-                    </fieldset>
-                </form>
-            </div>
-        </div>  
-    </body>
+  //           $(this).autocomplete('option', 'source', aSearch);
+  //       }
+  // });
+
+// var simple = [];
+
+// var availableTags = $.ajax({
+//     type: "GET",
+//     url: "//localhost:3001/users",
+//     success: function(data){
+//         simple = JSON.parser(JSON.stringify(data));
+//     }
+// })
+//     $( "#tags" ).autocomplete({
+//       source: availableTags
+//     });
+
+    
+// });
+
+// var availableTags = [
+//       "ActionScript",
+//       "AppleScript",
+//       "Asp",
+//       "BASIC",
+//       "C",
+//       "C++",
+//       "Clojure",
+//       "COBOL",
+//       "ColdFusion",
+//       "Erlang",
+//       "Fortran",
+//       "Groovy",
+//       "Haskell",
+//       "Java",
+//       "JavaScript",
+//       "Lisp",
+//       "Perl",
+//       "PHP",
+//       "Python",
+//       "Ruby",
+//       "Scala",
+//       "Scheme"
+//     ];
+var aTags = [];
+var availableTags = $.ajax({
+    type: "GET",
+    url: "//localhost:3001/users",
+    success: function(data){
+        var json = JSON.parse(JSON.stringify(data));
+        console.log(json)
+        //console.log(JSON.parse(JSON.stringify(data)));
+        var myArray = [];
+        for(var i=0; i<json.length;i++){
+            console.log(i);
+            myArray.push(json[i].username);
+        }
+        console.log(myArray);
+        $( "#tags" ).autocomplete({
+            source: myArray
+        });
+    }
+});
+});
+</script>
+</head>
+<body>
+<input id="tags" type="text">
+</div>
+</body>
 </html>
