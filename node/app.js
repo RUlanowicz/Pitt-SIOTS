@@ -150,7 +150,7 @@ app.post('/device_reg', function(req, res) {
 			          for(var i=0; i<json.length;i++){
 			          	connection.query('insert into relationship (relationship_temp_id, subject_type, object_type, object_id, subject_id) values (5, \'human\',\'device\','+device_id+','+json[i].object_id+')',function(err,rows,fields){
 
-			          		});
+			          	});
 			          }
 					}
 				});
@@ -219,8 +219,32 @@ app.post('/friend_reg', function(req,res,next){
 					});
 				}
 				else{
-					console.log("new friendship inserted");
-					return res.send({ success : true, message :'user registration is done' });
+					connection.query('insert into relationship (relationship_temp_id, subject_type,object_type, object_id, subject_id) values(1,\'human\',\'human\', (select userid from user where username = \''+req.body.user+'\'), (select userid from user where username=\''+req.body.friend+'\'));',function(err,rows,fields){
+						console.log("new friendship inserted");
+						connection.query('select deviceId from device_instance where belongTo =\''+req.body.friend+'\'',function(err,rows,fields){
+							//console.log('select deviceId from device_instance where belongTo =\''+req.body.friend+'\'');
+							var temp = JSON.parse(JSON.stringify(rows));
+							console.log(temp);
+								for(var i=0; i<temp.length;i++){
+									connection.query('insert into relationship (relationship_temp_id, subject_type, object_type, object_id, subject_id) values (5,\'human\',\'device\','+temp[i].deviceId+', (select userid from user where username = \''+req.body.user+'\'))',function(err,rows,fields){
+									//console.log("insert into relationship (relationship_temp_id, subject_type, object_type, object_id, subject_id) values (5,\'human\',\'device\',"+temp[i].deviceId+", (select userid from user where username = \''+req.body.user+'\'))");
+									});
+								}
+						});
+						connection.query('select deviceId from device_instance where belongTo =\''+req.body.user+'\'',function(err,rows,fields){
+							//console.log('select deviceId from device_instance where belongTo =\''+req.body.user+'\'');
+							var temp = JSON.parse(JSON.stringify(rows));
+							console.log(temp);
+							console.log(temp.length);
+							for(var i=0; i<temp.length;i++){
+								console.log(temp[i].deviceId);
+								//console.log('insert into relationship (relationship_temp_id, subject_type, object_type, object_id, subject_id) values (5,\'human\',\'device\','+temp[i].deviceId+', (select userid from user where username = \''+req.body.friend+'\'))');
+								connection.query('insert into relationship (relationship_temp_id, subject_type, object_type, object_id, subject_id) values (5,\'human\',\'device\','+temp[i].deviceId+', (select userid from user where username = \''+req.body.friend+'\'))',function(err,rows,fields){
+								});
+							}
+						});
+						return res.send({ success : true, message :'user registration is done' });
+					});
 				}
 				connection.release();
 			});
