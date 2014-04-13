@@ -1,7 +1,7 @@
 
 $(document).ready(function() {
   // CURRENT USER
-  var owner = "richard"; 
+  var owner = document.getElementById('username').getAttribute('data-value');
   // LOGIN
   $("#login_button").click(function(event){
     //alert('hello');
@@ -103,26 +103,28 @@ $(document).ready(function() {
           data: JSON.stringify(user),
 
            success: function (msg) {
-               console.log(JSON.stringify(msg));
-               var obj = JSON.parse(JSON.stringify(msg));
-               //redirect the page 
-              var profile_url = "//localhost:3001/profile/" + user.username ; 
-              console.log (profile_url);
-              if (obj.success) { 
-          // this will load profile page with a proper username
-                  $.ajax({
-                      type:"GET",
-                      url: profile_url,
-                      error: function(data){
-                      console.log("There was a problem");
-                      },
-                      success: function(data){
-                          $('.container').html(data);
-                      }
-                  })
-              }
-               else if (!obj.success) { window.location.replace("http://localhost:3001/views/registration.html");}
-           }
+              window.location.replace("http://localhost:3001/views/login.html");
+          //      console.log(JSON.stringify(msg));
+          //      var obj = JSON.parse(JSON.stringify(msg));
+          //      //redirect the page 
+          //     var profile_url = "//localhost:3001/profile/" + user.username ; 
+          //     console.log (profile_url);
+          //     if (obj.success) { 
+          // // this will load profile page with a proper username
+          //         $.ajax({
+          //             type:"GET",
+          //             url: profile_url,
+          //             error: function(data){
+          //             console.log("There was a problem");
+          //             },
+          //             success: function(data){
+          //                 $('.container').html(data);
+          //             }
+          //         })
+          //     }
+          //      else if (!obj.success) { window.location.replace("http://localhost:3001/views/registration.html");}
+          //  }
+        }
       }); //ajax
       console.log("I sent the request");
   }); // USER REG BUTTON
@@ -189,7 +191,6 @@ $(document).ready(function() {
   // ADD NEW DEVICE BUTTON
   $("#add_new_device_button").click(function(event){
         //var owner = "jieunatbosch";
-        alert("adding new device");
       $.ajax({
           type: "GET", 
           url: "//localhost:3001/device_reg/" + owner, 
@@ -202,5 +203,21 @@ $(document).ready(function() {
           } //success
       }) //ajax
   }); // ADD NEW DEVICE BUTTON
+
+  // REGISTER BUTTON
+  $("#register_button").click(function(event){
+        //var owner = "jieunatbosch";
+      $.ajax({
+          type: "GET", 
+          url: "//localhost:3001/registration/",
+          error: function(data){
+              console.log("There was a problem");
+          },
+          success: function(data){
+              //console.log(data);
+           $('.container').html(data);
+          } //success
+      }) //ajax
+  }); // REGISTER BUTTON
  
 }) //document ready 

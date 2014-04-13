@@ -285,6 +285,10 @@ app.get('/users', function(req,res,next) {
 	});
 });
 
+app.get ('/registration', function(req, res, next) {
+	res.render('registration');
+});
+
 app.get ('/profile/:username', function(req, res, next) {
 	console.log ("/profile/username username is " + req.params.username);
 
