@@ -224,6 +224,36 @@ app.get('/friends/:username', function(req,res,next) {
 	});
 });
 
+app.get('/users', function(req,res,next) {
+	db.getConnection(function(err,connection) {
+		if (err) {
+			console.error('CONNECTION error: ',err);
+			res.statusCode = 503;
+			res.send({
+				result: 'error',
+				err: err.code
+			});
+		}
+		else {
+			connection.query('SELECT username FROM user',function(err,rows,fields){
+				if (err) {
+					console.error(err);
+					res.statusCode = 500;
+					res.send({
+						result: 'error',
+						err: err.code
+					});
+				}
+				else{
+					console.log("====================");
+					console.log(JSON.stringify(rows));
+					res.send(rows);
+				}
+			});
+		}
+	});
+});
+
 
 //app.get('/device_registration', routes.device_registration);
 
