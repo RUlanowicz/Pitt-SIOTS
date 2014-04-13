@@ -12,13 +12,14 @@
     $(document).ready(function() {
       $("#regis_button").click(function(event){
             alert("hi");
-           var owner = <%- JSON.stringify(username) %>; 
+            var owner = <%- JSON.stringify(username) %>; 
            var device = {
             device_type:$("#device_type").val(),
             brand:$("#brand").val(),
             model:$("#model").val(),
             communication:$("#communication").val(), 
             belong_to: owner,
+            //belong_to: richard
             indoor_location:$("#indoor_location").val(),
             device_name:$("#device_name").val()
            }
@@ -68,6 +69,24 @@
     </head>
     
     <body>
+        <!-- Navbar -->
+        <!-- <div class="navbar navbar-inverse navbar-static-top">
+            <div class="container">
+                <a href = "#" class="navbar-brand">SIoTs</a>
+                <button class="navbar-toggle" data-toggle = "collapse" data-target = ".navHeaderCollapse">
+                    <span class = "icon-bar"></span>
+                    <span class = "icon-bar"></span>
+                    <span class = "icon-bar"></span>
+                </button>
+                <div class="collapse navbar-collapse navHeaderCollapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="active"><a href="#"> Home </a></li>
+                        <li><a href="#"> New Device </a></li>
+                        <li><a href="#"> New Friend </a></li>
+                    </ul>
+                </div>
+            </div>
+        </div> -->
         <div class="container">
             <div class="row">
                 <form class="form-horizontal" action=''>

@@ -1,0 +1,19 @@
+body {
+	background: url(background.jpg) no-repeat center center fixed;
+	-webkit-background-size: cover;
+  	-moz-background-size: cover;
+  	-o-background-size: cover;
+  	background-size: cover;
+}
+/*#login_box{
+	text-align:center;
+	margin:0 auto;
+}
+#username_box{
+	text-align:center;
+	margin:0 auto;
+}
+#actual_legend{
+	font-size:32;
+	font-family:Arial;
+}*/

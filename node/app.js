@@ -239,38 +239,7 @@ app.get ('/profile/:username', function(req, res, next) {
 app.get ('/device_reg/:username', function(req, res, next) {
 	console.log ("/device_reg/username username is " + req.params.username);
 
-	res.render('device_reg', {username:req.params.username});
-});
-
-
-app.get('/users', function(req,res,next){
-	db.getConnection(function(err, connection) {
-		if (err) {
-			console.error('CONNECTION error: ',err);
-			res.statusCode = 503;
-			res.send({
-				result: 'error',
-				err: err.code
-			});
-		}
-		else{
-			connection.query('select username from user',function(err,rows,fields){
-				if (err) {
-					console.error(err);
-					res.statusCode = 500;
-					res.send({
-						result: 'error',
-						err: err.code
-					});
-				}
-				else{
-					console.log("====================");
-					console.log(JSON.stringify(rows));
-					res.send(rows);
-				}
-			});
-		}
-	});
+	res.render('device_reg.html', {username:req.params.username});
 });
 
 console.log("Server running on port 3001");
