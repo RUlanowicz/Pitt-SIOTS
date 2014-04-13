@@ -1,7 +1,19 @@
 
 $(document).ready(function() {
+
   // CURRENT USER
   var owner = document.getElementById('username').getAttribute('data-value');
+
+  // CAPITALIZE USERNAME
+  function capitalize()
+  {
+      var str = document.getElementById('username').getAttribute('data-value');
+      str = str.substr(0,1).toUpperCase()+str.substr(1,str.length).toLowerCase();
+      var html = "<div id=\"username\" data-value="+str+">"+
+          "<p style=\"margin-left:2%;font-size:60\">"+str+"</p>"+
+        "</div>";
+      document.getElementById('username').innerHTML= html;
+  }
   // LOGIN
   $("#login_button").click(function(event){
     //alert('hello');
@@ -35,6 +47,7 @@ $(document).ready(function() {
                 success: function(data){
                   //alert("userprofile");
                   $('.container').html(data);
+                  capitalize();
                 } //success
               }) //ajax
          } //obj.success
