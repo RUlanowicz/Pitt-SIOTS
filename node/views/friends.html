@@ -2,20 +2,25 @@
 <html lang="en">
 	<head>
   		<meta charset="utf-8">
+  		<script src="js/siots.js"></script>
 	</head>
 
 	<body>
-
-  		<% friends.forEach(function(friend){ %>
-    		<div style="display:inline-block; vertical-align:bottom;">
-				<a href="#">
-					<p style="float: left">
-						<img src="profile-pic.png" class="img-rounded img-responsive" height="10%" width="10%" style="margin-top:2%;"/>
-							<%= friend.firstname %> <%= friend.lastname %> | <%= friend.streetadd %> <%= friend.city %>, <%= friend.state %>
-					</p>
-				</a>
-			</div></br>
-    	<% }) %>
+		<div class="container">
+			<div class="controls">
+				<button class="btn btn-success" id="add_new_friend_button">Add New Friend</button>
+			</div>
+	  		<% friends.forEach(function(friend){ %>
+	    		<div style="display:inline-block; vertical-align:bottom;">
+					<a href="#">
+						<p style="float: left">
+							<img src="profile-pic.png" class="img-rounded img-responsive" height="10%" width="10%" style="margin-top:2%;"/>
+								<%= friend.firstname %> <%= friend.lastname %> | <%= friend.streetadd %> <%= friend.city %>, <%= friend.state %>
+						</p>
+					</a>
+				</div></br>
+	    	<% }) %>
+    	</div>
 	</body>
 </html>
 

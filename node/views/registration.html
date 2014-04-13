@@ -7,57 +7,7 @@
         <link href = "css/bootstrap.min.css" rel = "stylesheet">
         <link href = "css/stylesheet_registration.css" rel = "stylesheet">
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-        <script type="text/javascript"  language="javascript">
-
-            $(document).ready(function() {
-                $("#user_reg_button").click(function(event){
-                    var user = {
-                        username:   $("#username").val(),
-                        password:   $("#password").val(),
-                        email:      $("#email").val(),
-                        first_name: $("#first_name").val(), 
-                        last_name:  $("#last_name").val(),
-                        address:    $("#address").val(),
-                        city:       $("#city").val(), 
-                        state:      $("#state").val()
-                    }
-
-                    console.log ("username: " + username + "password: " + password + "email: " + email + "first name: " + first_name + "last name: " + last_name + "address: " + address + "city: " + city + "state: " + state);
-                    console.log (user); 
-
-                    $.ajax({
-                        dataType: "json",
-                        type: "POST", 
-                        url: "//localhost:3001/registration", 
-                        contentType: 'application/json; charset=utf-8',
-                        data: JSON.stringify(user),
-
-                         success: function (msg) {
-                             console.log(JSON.stringify(msg));
-                             var obj = JSON.parse(JSON.stringify(msg));
-                             //redirect the page 
-                            var profile_url = "//localhost:3001/profile/" + user.username ; 
-                            console.log (profile_url);
-                            if (obj.success) { 
-                        // this will load profile page with a proper username
-                                $.ajax({
-                                    type:"GET",
-                                    url: profile_url,
-                                    error: function(data){
-                                    console.log("There was a problem");
-                                    },
-                                    success: function(data){
-                                        $('.container').html(data);
-                                    }
-                                })
-                            }
-                             else if (!obj.success) { window.location.replace("http://localhost:3001/views/registration.html");}
-                         }
-                    }); //ajax
-                    console.log("I sent the request");
-                }); //login
-            }) //docuemnt 
-        </script>
+        <script src="js/siots.js"></script>
     </head>
     
     <body>

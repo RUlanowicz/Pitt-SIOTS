@@ -2,25 +2,30 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <link href="bootstrap.css" rel="stylesheet">
-        <link href="bootstrap-switch.css" rel="stylesheet">
-        <script src="jquery.js"></script>
-        <script src="bootstrap-switch.js"></script>
+        <link href="css/bootstrap.css" rel="stylesheet">
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <script src="js/siots.js"></script>
+        
     </head>
 
     <body>
-
-        <% devices.forEach(function(device){ %>
-            <div class="row">
-                <div style="display:inline-block; vertical-align:bottom;">
-                    <p style="float: left">
-                        <a href="#">
-                            <img src="appliances.png" class="img-rounded img-responsive" height="10%" width="10%" style="margin-top:2%;"/>
-                            <%= device.deviceName %> | <%= device.deviceType %> | <%= device.indoorLocation %> | <%= device.communicationType %> | <%= device.property_name %> | <%= device.status %>
-                        </a>
-                    </p>
-                </div>
+        <div class="container">
+            <div class="controls">
+                <button class="btn btn-success" id="add_new_device_button">Add New Device</button>
             </div>
-        <% }) %>
+        </br>
+            <% devices.forEach(function(device){ %>
+                <div class="row">
+                    <div style="display:inline-block; vertical-align:bottom;">
+                        <p style="float: left">
+                            <a href="#">
+                                <img src="appliances.png" class="img-rounded img-responsive" height="10%" width="10%" style="margin-top:2%;"/>
+                                <%= device.deviceName %> | <%= device.deviceType %> | <%= device.indoorLocation %> | <%= device.communicationType %> | <%= device.property_name %> | <%= device.status %>
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
     </body>
 </html>
