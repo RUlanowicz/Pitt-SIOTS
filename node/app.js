@@ -136,7 +136,7 @@ app.post('/friend_reg', function(req,res,next){
 		}
 		else{
 			console.log('add friend');
-			connection.query('insert into relationship (relationship_temp_id, subject_type,object_type, object_id, subject_id) values(1,\'human\',\'human\',(select userid from user where username=\''+req.body.user+'\'), (select userid from user where username = \''+req.body.friend+'\'));',function(err,rows,fields){
+			connection.query('insert into relationship (relationship_temp_id, subject_type,object_type, object_id, subject_id) values(1,\'human\',\'human\', (select userid from user where username = \''+req.body.friend+'\'), (select userid from user where username=\''+req.body.user+'\'));',function(err,rows,fields){
 				if(err){
 					console.error(err);
 					res.statusCode = 500;
@@ -289,12 +289,15 @@ app.get ('/registration', function(req, res, next) {
 	res.render('registration');
 });
 
+app.get('/friend_reg/:username', function(req, res, next) {
+	res.render('friend_reg.html', {username:req.params.username});
+});
+
 app.get ('/profile/:username', function(req, res, next) {
 	console.log ("/profile/username username is " + req.params.username);
 
 	res.render('profile',{username:req.params.username});
 });
-
 
 app.get ('/device_reg/:username', function(req, res, next) {
 	console.log ("/device_reg/username username is " + req.params.username);

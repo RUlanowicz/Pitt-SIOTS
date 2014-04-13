@@ -3,86 +3,19 @@
 <head>
 <meta charset="utf-8">
 <title>Social Network of Things</title>
+<link href = "css/bootstrap.min.css" rel = "stylesheet">
+<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
-<link href = "css/bootstrap.min.css" rel = "stylesheet">
-<script>
-$(function () {
-    var availableTags = $.ajax({
-        type: "GET",
-        url: "//localhost:3001/users",
-        success: function(data){
-            var json = JSON.parse(JSON.stringify(data));
-            var myArray = [];
-            for(var i=0; i<json.length;i++){
-                myArray.push(json[i].username);
-            }
-            console.log(myArray);
-            $( "#tags" ).autocomplete({
-                source: myArray,
-                change: function (event, ui) {
-                    if(!ui.item){
-                            $("#tags").val("")
-                        }
-                    }
-            });
-        }
-    });
-    $("#regis_button").click(function(event){
-        var friend = {
-            user:"ryan",
-            friend:$("#tags").val()
-        };
-        $.ajax({
-            dataType: "json",
-            type: "POST", 
-            url: "//localhost:3001/friend_reg", 
-            contentType: 'application/json; charset=utf-8',
-            data: JSON.stringify(friend),
-            success: function (msg) {
-                console.log(JSON.stringify(msg));
-                var obj = JSON.parse(JSON.stringify(msg));
-                //redirect the page 
-                var profile_url = "//localhost:3001/profile/" + obj.username ; 
-                console.log (profile_url);
-                if (obj.success) { 
-                        // this will load profile page with a proper username
-                        $.ajax({
-                            type:"GET",
-                            url: profile_url,
-                            error: function(data){
-                                console.log("There was a problem");
-                            },
-                            success: function(data){
-                                $('.container').html(data);
-                            }
-                        })
-                } //obj.success
-                
-                else if (!obj.success) {window.location.replace("http://localhost:3001/views/login.html");}
-            }, 
-            error: function(e) {
-                var obj=JSON.parse(JSON.stringify(e));
-                if (obj.status == 200) { 
-                        alert ("I am 200 " + obj.status); 
-                }
-                else { 
-                alert ("I have an error" + JSON.stringify(e));
-                            console.log(e);
-                }
-            }
-        });
-    });
-});
-</script>
+<script src="js/siots.js"></script>
+
 </head>
 <body>
 <div class="container">
             <div class="row">
                     <div id="legend">
-                        <legend style="text-align:center;">Add A Friend</legend>
+                        <legend>Add A Friend</legend>
                     </div>
                   <fieldset>
                   <div class="control-group">
@@ -94,7 +27,7 @@ $(function () {
                     </div>
                     <div class="control-group">
                         <div class="controls">
-                            <button class="btn btn-success" id="regis_button">Add Friend</button>
+                            <button class="btn btn-success" id="friend_reg_button">Add Friend</button>
                         </div>
                     </div>
             </div>

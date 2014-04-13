@@ -187,6 +187,88 @@ $(document).ready(function() {
     } //error
   }); //ajax
   }); // DEVICE REGISTRATION 
+  
+  // FRIEND REGISTRATION
+    $("#friend_reg_button").click(function(event){
+        var friend = {
+            user: owner,
+            friend:$("#tags").val()
+        };
+        $.ajax({
+            dataType: "json",
+            type: "POST", 
+            url: "//localhost:3001/friend_reg", 
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(friend),
+            success: function (msg) {
+                console.log(JSON.stringify(msg));
+                var obj = JSON.parse(JSON.stringify(msg));
+                //redirect the page 
+                var friends_url = "//localhost:3001/friends/" + owner ; 
+                console.log (friends_url);
+                if (obj.success) { 
+                        // this will load profile page with a proper username
+                        $.ajax({
+                            type:"GET",
+                            url: friends_url,
+                            error: function(data){
+                                console.log("There was a problem");
+                            },
+                            success: function(data){
+                                $('#friends').html(data);
+                            }
+                        })
+                } //obj.success
+                
+                else if (!obj.success) {window.location.replace("http://localhost:3001/views/login.html");}
+            }, 
+            error: function(e) {
+                var obj=JSON.parse(JSON.stringify(e));
+                if (obj.status == 200) { 
+                        alert ("I am 200 " + obj.status); 
+                }
+                else { 
+                alert ("I have an error" + JSON.stringify(e));
+                            console.log(e);
+                }
+            }
+        });
+    });
+
+  // ADD NEW FRIEND BUTTON
+  $("#add_new_friend_button").click(function(event){
+    $.ajax({
+        type: "GET", 
+        url: "//localhost:3001/friend_reg/" + owner, 
+        error: function(data){
+            console.log("There was a problem");
+        },
+        success: function(data){
+            //console.log(data);
+         $('#friends').html(data);
+        } //success
+    }); //ajax
+    var availableTags = $.ajax({
+        type: "GET",
+        url: "//localhost:3001/users",
+        success: function(data){
+          var json = JSON.parse(JSON.stringify(data));
+          var myArray = [];
+          for(var i=0; i<json.length;i++){
+              myArray.push(json[i].username);
+          }
+          console.log(myArray);
+          $( "#tags" ).autocomplete({
+              source: myArray,
+              change: function (event, ui) {
+                if(!ui.item){
+                  $("#tags").val("")
+                }
+              }
+          });
+        }// success
+    }); // ajax
+  }); // ADD NEW FRIEND BUTTON
 
   // ADD NEW DEVICE BUTTON
   $("#add_new_device_button").click(function(event){
