@@ -166,7 +166,6 @@ $(document).ready(function() {
           console.log("There was a problem");
          },
           success: function(data){
-            alert("list devices now"); 
             $('#devices').html(data);
           }
         })
