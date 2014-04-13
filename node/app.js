@@ -124,6 +124,37 @@ app.post('/registration', function(req, res, next) {
 	}); //db.connection
 });
 
+app.post('/friend_reg', function(req,res,next){
+	db.getConnection(function(err,connection){
+		if(err){
+			console.error('CONNECTION error: ',err);
+			res.statusCode = 503;
+			res.send({
+				result: 'error',
+				err: err.code
+			});
+		}
+		else{
+			console.log('add friend');
+			connection.query('insert into relationship (relationship_temp_id, subject_type,object_type, object_id, subject_id) values(1,\'human\',\'human\',(select userid from user where username=\''+req.body.user+'\'), (select userid from user where username = \''+req.body.friend+'\'));',function(err,rows,fields){
+				if(err){
+					console.error(err);
+					res.statusCode = 500;
+					 return res.send({
+						result: 'error',
+						err: err.code
+					});
+				}
+				else{
+					console.log("new friendship inserted");
+					return res.send({ success : true, message :'user registration is done' });
+				}
+				connection.release();
+			});
+		}
+	});
+});
+
 app.get('/devices/:username', function(req,res,next){
 	db.getConnection(function(err, connection) {
 		if (err) {
@@ -254,11 +285,6 @@ app.get('/users', function(req,res,next) {
 	});
 });
 
-
-//app.get('/device_registration', routes.device_registration);
-
-//this returns the rendering page of profile.html, 
-//the function can be called from login.html after login, or registration.html after registration 
 app.get ('/profile/:username', function(req, res, next) {
 	console.log ("/profile/username username is " + req.params.username);
 

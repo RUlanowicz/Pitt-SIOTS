@@ -2,133 +2,105 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>jQuery UI Autocomplete - Default functionality</title>
+<title>Social Network of Things</title>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+<link href = "css/bootstrap.min.css" rel = "stylesheet">
 <script>
 $(function () {
-  //   var data = function(){
-  //       $.ajax({
-  //           url: "//localhost:3001/users",
-  //           type: "GET",
-  //       })
-  //   }
-  // $("#search").autocomplete({
-  //     source: function (request, response) {
-  //        $.ajax({
-  //           url: "//localhost:3001/users",
-  //           type: "GET",
-  //           data: request,  // request is the value of search input
-  //           success: function (data) {
-  //               console.log(data);
-  //             //Map response values to fiedl label and value
-  //              response($.map(data, function (el) {
-  //                 return {
-  //                    label: el.username,
-  //                    value: el.userid
-  //                 };
-  //                 }));
-  //              }
-  //           });
-  //        },
-         
-  //        // The minimum number of characters a user must type before a search is performed.
-  //        minLength: 3, 
-         
-  //        // set an onFocus event to show the result on input field when result is focused
-  //        focus: function (event, ui) { 
-  //           this.value = ui.item.label; 
-  //           // Prevent other event from not being execute
-  //           event.preventDefault();
-  //        },
-  //        select: function (event, ui) {
-  //           // Prevent value from being put in the input:
-  //           this.value = ui.item.label;
-  //           // Set the id to the next input hidden field
-  //           $(this).next("input").val(ui.item.value); 
-  //           // Prevent other event from not being execute            
-  //           event.preventDefault();
-  //           // optionnal: submit the form after field has been filled up
-  //           //$('#quicksearch').submit();
-  //        },
-  //        search: function(oEvent, oUi) {
-  //           var selectedValue = $(oEvent.target).val();
-  //           var aSearch = [];
-  //           $('source').each(function(index, value) {
-  //               if (value.substr(0, selectedValue .length) == selectedValue ) 
-  //                   aSearch.push(value);               
-  //           });
-
-  //           $(this).autocomplete('option', 'source', aSearch);
-  //       }
-  // });
-
-// var simple = [];
-
-// var availableTags = $.ajax({
-//     type: "GET",
-//     url: "//localhost:3001/users",
-//     success: function(data){
-//         simple = JSON.parser(JSON.stringify(data));
-//     }
-// })
-//     $( "#tags" ).autocomplete({
-//       source: availableTags
-//     });
-
-    
-// });
-
-// var availableTags = [
-//       "ActionScript",
-//       "AppleScript",
-//       "Asp",
-//       "BASIC",
-//       "C",
-//       "C++",
-//       "Clojure",
-//       "COBOL",
-//       "ColdFusion",
-//       "Erlang",
-//       "Fortran",
-//       "Groovy",
-//       "Haskell",
-//       "Java",
-//       "JavaScript",
-//       "Lisp",
-//       "Perl",
-//       "PHP",
-//       "Python",
-//       "Ruby",
-//       "Scala",
-//       "Scheme"
-//     ];
-var aTags = [];
-var availableTags = $.ajax({
-    type: "GET",
-    url: "//localhost:3001/users",
-    success: function(data){
-        var json = JSON.parse(JSON.stringify(data));
-        console.log(json)
-        //console.log(JSON.parse(JSON.stringify(data)));
-        var myArray = [];
-        for(var i=0; i<json.length;i++){
-            console.log(i);
-            myArray.push(json[i].username);
+    var availableTags = $.ajax({
+        type: "GET",
+        url: "//localhost:3001/users",
+        success: function(data){
+            var json = JSON.parse(JSON.stringify(data));
+            var myArray = [];
+            for(var i=0; i<json.length;i++){
+                myArray.push(json[i].username);
+            }
+            console.log(myArray);
+            $( "#tags" ).autocomplete({
+                source: myArray,
+                change: function (event, ui) {
+                    if(!ui.item){
+                            $("#tags").val("")
+                        }
+                    }
+            });
         }
-        console.log(myArray);
-        $( "#tags" ).autocomplete({
-            source: myArray
+    });
+    $("#regis_button").click(function(event){
+        var friend = {
+            user:"ryan",
+            friend:$("#tags").val()
+        };
+        $.ajax({
+            dataType: "json",
+            type: "POST", 
+            url: "//localhost:3001/friend_reg", 
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(friend),
+            success: function (msg) {
+                console.log(JSON.stringify(msg));
+                var obj = JSON.parse(JSON.stringify(msg));
+                //redirect the page 
+                var profile_url = "//localhost:3001/profile/" + obj.username ; 
+                console.log (profile_url);
+                if (obj.success) { 
+                        // this will load profile page with a proper username
+                        $.ajax({
+                            type:"GET",
+                            url: profile_url,
+                            error: function(data){
+                                console.log("There was a problem");
+                            },
+                            success: function(data){
+                                $('.container').html(data);
+                            }
+                        })
+                } //obj.success
+                
+                else if (!obj.success) {window.location.replace("http://localhost:3001/views/login.html");}
+            }, 
+            error: function(e) {
+                var obj=JSON.parse(JSON.stringify(e));
+                if (obj.status == 200) { 
+                        alert ("I am 200 " + obj.status); 
+                }
+                else { 
+                alert ("I have an error" + JSON.stringify(e));
+                            console.log(e);
+                }
+            }
         });
-    }
-});
+    });
 });
 </script>
 </head>
 <body>
-<input id="tags" type="text">
+<div class="container">
+            <div class="row">
+                    <div id="legend">
+                        <legend style="text-align:center;">Add A Friend</legend>
+                    </div>
+                  <fieldset>
+                  <div class="control-group">
+                      <label class="control-label" for="device_type">Friend Username</label>
+                      <div class="controls">
+                        <input type="text" id="tags" name="tags">
+                        <p class="help-block">Please enter the username of your friend</p>
+                      </div>
+                    </div>
+                    <div class="control-group">
+                        <div class="controls">
+                            <button class="btn btn-success" id="regis_button">Add Friend</button>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </body>
+</html>
 </div>
 </body>
 </html>
