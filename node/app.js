@@ -107,35 +107,55 @@ app.post('/device_reg', function(req, res) {
 					{
 						var capi = JSON.parse(JSON.stringify(rows));
 						capi = capi[0].capabilities;
-						console.log("capi===================++++");
-						console.log(capi);
+						// console.log("capi===================++++");
+						// console.log(capi);
 						var exploded = capi.split(",");
-						console.log(exploded);
-						console.log(exploded.length);
+						// console.log(exploded);
+						// console.log(exploded.length);
 						for(var i=0;i < exploded.length; i++){
-							console.log(exploded[i]);
+							// console.log(exploded[i]);
 							if(exploded[i].indexOf("property") != -1){
-								console.log('we have a property');
+								// console.log('we have a property');
 								to_insert = exploded[i].trim();
-								console.log(to_insert);
+								// console.log(to_insert);
 								connection.query('select capability_id from device_capability_template where capability_name = \''+to_insert+'\'',function(err,rows,fields){
 									var prop_id = JSON.parse(JSON.stringify(rows));
 									prop_id = prop_id[0].capability_id;
-									console.log(prop_id);
-									console.log(device_id);
-									console.log('insert into device_status (deviceId, property_id) values(\''+device_id+'\',\''+prop_id+'\')');
+									// console.log(prop_id);
+									// console.log(device_id);
+									// console.log('insert into device_status (deviceId, property_id) values(\''+device_id+'\',\''+prop_id+'\')');
 									connection.query('insert into device_status (deviceId, property_id) values(\''+device_id+'\',\''+prop_id+'\')',function(err,rows,fields){
 
 									});
-								});
+								}); //select capability
 							}
-						}
+						} //for loop
+					} //else (to run select capabilities )
+					}); //connection.query (select capabilities) 
+					} //else
+				});
+				console.log('select object_id from relationship where subject_id = (select userid from user where username = \''+req.body.belong_to+'\') and relationship_temp_id = 1');
+				connection.query('select object_id from relationship where subject_id = (select userid from user where username = \''+req.body.belong_to+'\') and relationship_temp_id = 1',function(err,rows,fields){
+					if(err){
+						console.error(err);
+						res.statusCode = 500;
+						return res.send({
+							result: 'query error',
+							err: err.code
+						});
 					}
-					});
-					return res.send({ success : true, message :'insert device succeeded' });
-					connection.release();
-				}
-			});
+					else{
+					var json = JSON.parse(JSON.stringify(rows));
+			          var myArray = [];
+			          for(var i=0; i<json.length;i++){
+			          	connection.query('insert into relationship (relationship_temp_id, subject_type, object_type, object_id, subject_id) values (5, \'human\',\'device\','+device_id+','+json[i].object_id+')',function(err,rows,fields){
+
+			          		});
+			          }
+					}
+				});
+				return res.send({ success : true, message :'insert device succeeded' });
+				connection.release();
 		}
 	});
 });
@@ -229,8 +249,8 @@ app.get('/devices/:username', function(req,res,next){
 					});
 				}
 				else{
-					console.log("====================");
-					console.log(rows);
+					//console.log("====================");
+					//console.log(rows);
 					res.render('devices',{
 						devices:rows,
 						title: "My Devices"
