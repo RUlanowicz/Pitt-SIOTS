@@ -43,7 +43,7 @@
                                                     <output id='<%= slide_output %>'> <%= device.status %> </output>
                                                 </div>
                                             </td>
-                                            <td></td>
+                                            <td>&nbsp;</td>
                                         <% }
                                         else if (device.deviceType == "radio" || device.deviceType == "simple_light" || device.deviceType == "motion_sensor") { %>
                                             <td>
@@ -52,7 +52,7 @@
                                                     <button type="button" class="btn btn-sm btn-warning" value="off">Off</button>
                                                 </div>
                                             </td>
-                                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                                         <% }
                                         else if (device.deviceType == "dimmer_light") { %>
                                             <td>
@@ -68,7 +68,7 @@
 
                                         <td>
                                             <div>
-                                                <button class="save_device_button" name="save_device_button" value='<%= device.status_id %>'> Save </button>
+                                                <button class="save_device_button btn btn-sm btn-info" name="save_device_button" value='<%= device.status_id %>'> Save </button>
                                             </div>
                                         </td>
                                     </tr>
