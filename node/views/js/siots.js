@@ -314,4 +314,59 @@ $(document).ready(function() {
       }) //ajax
   }); // REGISTER BUTTON
  
+  $(".save_device_button").click(function(event) {
+      var current_device = $(this).attr("value");
+
+      console.log(current_device);
+      var device_status_id = "device" + current_device;
+
+      //  TODO
+      //var device_value = document.getElementById(device_status_id).getAttribute('value');
+      //console.log(device_value); 
+
+      var device_value = "57";
+
+      var device_status = {
+        status_id: current_device,
+        status_value: device_value
+      }
+
+      $.ajax({
+          type: "POST",
+          url: "//localhost:3001/device_status/" + current_device,
+          contentType: 'application/json; charset=utf-8',
+          data: JSON.stringify(device_status),
+          success: function(msg){
+              var obj = JSON.parse(JSON.stringify(msg));
+              var profile_url = "//localhost:3001/devices/" + owner;
+              if (obj.success) { 
+                  // this will load profile page with a proper username
+                  $.ajax({
+                      type:"GET",
+                      url: profile_url,
+                      error: function(data){
+                          console.log("There was a problem");
+                      },
+                      success: function(data){
+                          $('#devices').html(data);
+                      }
+                  })
+              } //obj.success
+              else if (!obj.success) {
+                  window.location.replace("http://localhost:3001/views/login.html");
+              }
+          }, // success
+          error: function(e) {
+              var obj=JSON.parse(JSON.stringify(e));
+              if (obj.status == 200) { 
+                  alert ("I am 200 " + obj.status); 
+              }
+              else { 
+                  alert ("I have an error" + JSON.stringify(e));
+                  console.log(e);
+              }     
+          } //error
+      })  // ajax
+  }); // SAVE DEVICE BUTTON
+
 }) //document ready 

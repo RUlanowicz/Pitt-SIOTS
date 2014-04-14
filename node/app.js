@@ -252,6 +252,35 @@ app.post('/friend_reg', function(req,res,next){
 	});
 });
 
+app.post('/device_status/:status_id', function(req, res, next) {
+	db.getConnection(function(err, connection) {
+		if (err) {
+			console.error('CONNECTION error: ',err);
+			res.statusCode = 503;
+			res.send({
+				result: 'error',
+				err: err.code
+			});
+		}
+		else {
+			console.log ('UPDATE device_status SET status = \'' + req.body.status_value + '\' WHERE status_id = ' + req.body.status_id );
+			connection.query('UPDATE device_status SET status = \'' + req.body.status_value + '\' WHERE status_id = ' + req.body.status_id , function(err, rows, fields){
+				if (err) {
+					console.error(err);
+					res.statusCode = 500;
+					res.send({
+						result: 'error',
+						err: err.code
+					});
+				}
+				else {
+					return res.send({ success : true, message : 'device status updated' });
+				}
+			});
+		}
+	});
+});
+
 app.get('/devices/:username', function(req,res,next){
 	db.getConnection(function(err, connection) {
 		if (err) {
@@ -265,7 +294,7 @@ app.get('/devices/:username', function(req,res,next){
 		else{
 			connection.query('select * from (device_status d join device_instance i on d.deviceId = i.deviceId) join device_capability_template WHERE property_id = capability_id AND belongTo = \''+ req.params.username +'\'',function(err,rows,fields){
 				if (err) {
-					console.esrror(err);
+					console.error(err);
 					res.statusCode = 500;
 					res.send({
 						result: 'error',

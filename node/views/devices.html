@@ -3,6 +3,7 @@
     <head>
         <meta charset="utf-8">
         <link href="css/bootstrap.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="css/stylesheet_devices.css">
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
         <script src="js/siots.js"></script>
         
@@ -12,18 +13,69 @@
         <div class="container">
             <div class="controls">
                 <button class="btn btn-success" id="add_new_device_button">Add New Device</button>
-            </div>
-        </br>
+            </div></br>
+
             <% devices.forEach(function(device){ %>
                 <div class="row">
                     <div style="display:inline-block; vertical-align:bottom;">
-                        <p style="float: left">
+                        <p style="float: left; width:350px">
                             <a href="#">
                                 <img src="appliances.png" class="img-rounded img-responsive" height="10%" width="10%" style="margin-top:2%;"/>
                                 <%= device.deviceName %> | <%= device.deviceType %> | <%= device.indoorLocation %> | <%= device.communicationType %> | <%= device.property_name %> | <%= device.status %>
                             </a>
+
+                            <% var device_capabilities = "device_capabilities" + device.status_id %>
+
+                            <div id= <%= device_capabilities %> >
+
+                                <% var deviceClassId = "device" + device.status_id %>
+
+                                <table>
+                                    <tr>
+                                        <% if (device.deviceType == "thermostat") { %>
+                                            <td valign="middle">
+                                                <div class="range range-warning" style="width:250px">
+                                                    <% var slide_output = deviceClassId + "out" %>
+                                                    <% var deviceOnChange = slide_output + ".value=value" %>
+
+                                                    <input id='<%= deviceClassId %>' type="range" name="range" min="50" max="80" value= <%= device.status %> onchange= <%= deviceOnChange %> />
+
+                                                    <output id='<%= slide_output %>'> <%= device.status %> </output>
+                                                </div>
+                                            </td>
+                                            <td></td>
+                                        <% }
+                                        else if (device.deviceType == "radio" || device.deviceType == "simple_light" || device.deviceType == "motion_sensor") { %>
+                                            <td>
+                                                <div class="btn-group" id= <%= deviceClassId %> >
+                                                    <button type="button" class="btn btn-sm btn-warning" value="on">On</button>
+                                                    <button type="button" class="btn btn-sm btn-warning" value="off">Off</button>
+                                                </div>
+                                            </td>
+                                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                        <% }
+                                        else if (device.deviceType == "dimmer_light") { %>
+                                            <td>
+                                                <div class="range range-warning" style="width:250px">
+                                                    <% var deviceOnChange = deviceClassId + ".value=value" %>
+
+                                                    <input type="range" name="range" min="0" max="100" value= <%= device.status %> onchange= <%= deviceOnChange %> />
+                                                    <output id= <%= deviceClassId %> > <%= device.status %> </output>
+                                                </div>
+                                            </td>
+                                        <% } %>
+                                        
+
+                                        <td>
+                                            <div>
+                                                <button class="save_device_button" name="save_device_button" value='<%= device.status_id %>'> Save </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>                                     
+                            </div>
                         </p>
-                    </div>
+                    </div></br>
                 </div>
             <% }) %>
         </div>
