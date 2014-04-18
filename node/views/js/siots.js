@@ -64,6 +64,7 @@ $(document).ready(function() {
       console.log("fired");
       var target_url;
       var target = $(e.target).attr("href") // activated tab
+      var start, end;
       console.log(target);
       switch(target){
         case "#friends":
@@ -71,6 +72,8 @@ $(document).ready(function() {
           console.log(target_url);
         break;
         case "#devices":
+          start = performance.now();
+          console.log("START TIME : " + start);
           target_url = "//localhost:3001/devices/" + owner;
           console.log(target_url);
         break;
@@ -89,6 +92,9 @@ $(document).ready(function() {
           //var modify = document.getElementById(target); 
           //modify.innerHTML = data;
           $(target).html(data);
+          end = performance.now();
+          console.log("END TIME : " + end);
+          console.log("TIME DIFFERENCE = " + (end - start) + "\n\n");
         } //success
       }) //ajax 
     }); //TABS-ON-PROFILE
